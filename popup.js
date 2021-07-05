@@ -66,11 +66,20 @@ function generate_randnum(){
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  // Get user location information
+
+  fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
+  (response) => response.json()).then((jsonResponse) => {document.getElementById("divCheckboxg").innerHTML = jsonResponse.city
+  document.getElementById("divCheckboxh").innerHTML = jsonResponse.org})
+
+  ///////////////////////////////////
+
   var checkboxelement = document.getElementById('chk1');
   checkboxelement.addEventListener('change', function() {
     if(document.getElementById("chk1").checked == true){
-      storeindB();
-      showCustomer();
+      storeindB_withoutLocation();
+      showCustomer_LocIndependant();
     }else{
       document.getElementById("demo").innerHTML = "";
     }
@@ -78,15 +87,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var checkboxelement = document.getElementById('chk2');
   checkboxelement.addEventListener('change', function() {
-    if(document.getElementById("chk2").checked == true){
-      var outloc = "";
-      fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
-      (response) => response.json()).then((jsonResponse) => {document.getElementById("shareLocationdiv").innerHTML = "Your Location: "+ jsonResponse.city})
+    if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
+      storeindB_withLocation();
+      showCustomer_Locdependant();
+      document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
     }else{
-      document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location: with us";
+      document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location with us";
     }
   }, false);
 
+  if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
+    alert("hello");
+  }
   var coll = document.getElementsByClassName("collapsible");
   var i;
 
@@ -141,7 +153,7 @@ function getTiming_forAlexa(){
   document.getElementById("id02").innerHTML = outt;
 }
 
-function showCustomer() {
+function showCustomer_LocIndependant() {
   str = document.getElementById("tabUrl").innerHTML;
   if (str == "") {
     document.getElementById("txtHint").innerHTML = "";
@@ -155,7 +167,7 @@ function showCustomer() {
   xhttp.send();
 }
 
-function storeindB() {
+function storeindB_withoutLocation() {
   const record = {
     timestamp   : document.getElementById("requestStart").innerHTML,
     url         : document.getElementById("tabUrl").innerHTML,
@@ -180,6 +192,62 @@ function storeindB() {
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
+
+function showCustomer_Locdependant() {
+  str1 = document.getElementById("tabUrl").innerHTML;
+  if (str1 == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+
+  str2 = document.getElementById("divCheckboxg").innerHTML;
+  if (str2 == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+
+  str3 = document.getElementById("divCheckboxh").innerHTML;
+  if (str3 == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("demo").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "http://34.89.29.21/phpretrieve_loc.php?q="+str1+"&r="+str2+"&p="+str3);
+  xhttp.send();
+}
+
+function storeindB_withLocation() {
+  const record = {
+    city        : document.getElementById("divCheckboxg").innerHTML,
+    isp         : document.getElementById("divCheckboxh").innerHTML,
+    timestamp   : document.getElementById("requestStart").innerHTML,
+    url         : document.getElementById("tabUrl").innerHTML,
+    redirect    : document.getElementById("redirect").innerHTML,
+    dns         : document.getElementById("dns").innerHTML,
+    connect     : document.getElementById("connect").innerHTML,
+    request     : document.getElementById("request").innerHTML,
+    response    : document.getElementById("response").innerHTML,
+    dom         : document.getElementById("dom").innerHTML,
+    domParse    : document.getElementById("domParse").innerHTML,
+    domScripts  : document.getElementById("domScripts").innerHTML,
+    contentLoaded: document.getElementById("contentLoaded").innerHTML,
+    domSubRes   : document.getElementById("domSubRes").innerHTML,
+    load        : document.getElementById("load").innerHTML,
+    total       : document.getElementById("total").innerHTML
+  };
+  const myJSON = JSON.stringify(record);
+  //document.getElementById("demo").innerHTML = myJSON;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://34.89.29.21/phpstore_loc.php");
+  xhr.setRequestHeader("Content-type", "application/json")
+  xhr.send(myJSON);
+}
+
 browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
   var tab = tabs[0];
   browser.storage.local.get('cache').then(data => {
