@@ -3,8 +3,39 @@ body {
     font-size: 13px;
     -webkit-font-smoothing: antialiased;
 }
+
+div#check\ sharing {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+div#shareLocation {
+    font-family: 'Roboto';
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    /* font-weight: bold; */
+    margin-left: 20px;
+}
+
+div#shareData {
+    font-family: 'Roboto';
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    /* font-weight: bold; */
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+div#titleUni {
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    text-align:center;
+}
+
 #container {
-    width: 386px;
+    width: 400px;
 }
 span {
     display: table-cell;
@@ -16,13 +47,13 @@ span {
 }
 span:first-child {
     padding-right: 25px;
-    width: 100px;
+    width: 150px;
     text-align: left;
     padding-left: 4px;
 }
 span:not(:first-child) {
-    padding-right: 50px;
-    width: 50px;
+    padding-right: 25px;
+    width: 150px;
 }
 span:last-child {
     padding-right: 0px;
@@ -59,5 +90,5 @@ h3 {
     font-weight: 500;
 }
 #total {
-    padding-left: 200px;
+    padding-left: 10px;
 }

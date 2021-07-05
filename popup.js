@@ -5,12 +5,12 @@ var RandArray = [-1];
 function set(id, start, end, noacc) {
   var length = Math.round(end - start);
   var x = Math.round(start / total * 300);
-  document.getElementById(id + 'When').innerHTML = Math.round(start);
+  // document.getElementById(id + 'When').innerHTML = Math.round(start);
   document.getElementById(id).innerHTML = length;
-  document.getElementById(id + 'Total').innerHTML = noacc ? '-' : Math.round(end);
-  document.getElementById('r-' + id).style.cssText =
-    'background-size:' + Math.round(length / total * 300) + 'px 100%;' +
-    'background-position-x:' + (x >= 300 ? 299 : x) + 'px;';
+  // document.getElementById(id + 'Total').innerHTML = noacc ? '-' : Math.round(end);
+  // document.getElementById('r-' + id).style.cssText =
+  //   'background-size:' + Math.round(length / total * 300) + 'px 100%;' +
+  //   'background-position-x:' + (x >= 300 ? 299 : x) + 'px;';
 }
 
 function collapsible_handle(){
@@ -81,7 +81,18 @@ document.addEventListener('DOMContentLoaded', function() {
       storeindB_withoutLocation();
       showCustomer_LocIndependant();
     }else{
-      document.getElementById("demo").innerHTML = "";
+      document.getElementById("redirect_others").innerHTML = "";
+      document.getElementById("dns_others").innerHTML = "";
+      document.getElementById("connect_others").innerHTML = "";
+      document.getElementById("request_others").innerHTML = "";
+      document.getElementById("response_others").innerHTML = "";
+      document.getElementById("dom_others").innerHTML = "";
+      document.getElementById("domParse_others").innerHTML = "";
+      document.getElementById("domScripts_others").innerHTML = "";
+      document.getElementById("contentLoaded_others").innerHTML = "";
+      document.getElementById("domSubRes_others").innerHTML = "";
+      document.getElementById("load_others").innerHTML = "";
+      document.getElementById("total_others").innerHTML = "";
     }
   }, false);
 
@@ -90,9 +101,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
       storeindB_withLocation();
       showCustomer_Locdependant();
-      document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
+      // document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
     }else{
-      document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location with us";
+      document.getElementById("redirect_others").innerHTML = "";
+      document.getElementById("dns_others").innerHTML = "";
+      document.getElementById("connect_others").innerHTML = "";
+      document.getElementById("request_others").innerHTML = "";
+      document.getElementById("response_others").innerHTML = "";
+      document.getElementById("dom_others").innerHTML = "";
+      document.getElementById("domParse_others").innerHTML = "";
+      document.getElementById("domScripts_others").innerHTML = "";
+      document.getElementById("contentLoaded_others").innerHTML = "";
+      document.getElementById("domSubRes_others").innerHTML = "";
+      document.getElementById("load_others").innerHTML = "";
+      document.getElementById("total_others").innerHTML = "";
+      // document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location with us";
     }
   }, false);
 
@@ -161,7 +184,22 @@ function showCustomer_LocIndependant() {
   }
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
-    document.getElementById("demo").innerHTML = this.responseText;
+    // document.getElementById("demo").innerHTML = this.responseText;
+    var result = this.responseText;
+    var res = result.split(",");
+
+    document.getElementById("redirect_others").innerHTML = res[0];
+    document.getElementById("dns_others").innerHTML = res[1];
+    document.getElementById("connect_others").innerHTML = res[2];
+    document.getElementById("request_others").innerHTML = res[3];
+    document.getElementById("response_others").innerHTML = res[4];
+    document.getElementById("dom_others").innerHTML = res[5];
+    document.getElementById("domParse_others").innerHTML = res[6];
+    document.getElementById("domScripts_others").innerHTML = res[7];
+    document.getElementById("contentLoaded_others").innerHTML = res[8];
+    document.getElementById("domSubRes_others").innerHTML = res[9];
+    document.getElementById("load_others").innerHTML = res[10];
+    document.getElementById("total_others").innerHTML = res[11];
   }
   xhttp.open("GET", "http://34.89.29.21/phpretrieve.php?q="+str);
   xhttp.send();
@@ -214,7 +252,22 @@ function showCustomer_Locdependant() {
 
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
-    document.getElementById("demo").innerHTML = this.responseText;
+    // document.getElementById("demo").innerHTML = this.responseText;
+    var result = this.responseText;
+    var res = result.split(",");
+
+    document.getElementById("redirect_others").innerHTML = res[0];
+    document.getElementById("dns_others").innerHTML = res[1];
+    document.getElementById("connect_others").innerHTML = res[2];
+    document.getElementById("request_others").innerHTML = res[3];
+    document.getElementById("response_others").innerHTML = res[4];
+    document.getElementById("dom_others").innerHTML = res[5];
+    document.getElementById("domParse_others").innerHTML = res[6];
+    document.getElementById("domScripts_others").innerHTML = res[7];
+    document.getElementById("contentLoaded_others").innerHTML = res[8];
+    document.getElementById("domSubRes_others").innerHTML = res[9];
+    document.getElementById("load_others").innerHTML = res[10];
+    document.getElementById("total_others").innerHTML = res[11];
   }
   xhttp.open("GET", "http://34.89.29.21/phpretrieve_loc.php?q="+str1+"&r="+str2+"&p="+str3);
   xhttp.send();
