@@ -1,5 +1,6 @@
 var total = 0;
 var sendTofetch = [];
+var RandArray = [-1];
 
 function set(id, start, end, noacc) {
   var length = Math.round(end - start);
@@ -52,13 +53,37 @@ function fetchpages(arra){
     // }, false);
 }
 
+function generate_randnum(){
+  var x = Math.floor((Math.random() * 10) + 1);
+  for(var i = 0 ; i < RandArray.length; i++){
+    if(RandArray[i] != x){
+      RandArray.push(x);
+      return x;
+    }else{
+      generate_randnum();
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var checkboxelement = document.getElementById('chk1');
   checkboxelement.addEventListener('change', function() {
     if(document.getElementById("chk1").checked == true){
+      storeindB();
       showCustomer();
     }else{
       document.getElementById("demo").innerHTML = "";
+    }
+  }, false);
+
+  var checkboxelement = document.getElementById('chk2');
+  checkboxelement.addEventListener('change', function() {
+    if(document.getElementById("chk2").checked == true){
+      var outloc = "";
+      fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
+      (response) => response.json()).then((jsonResponse) => {document.getElementById("shareLocationdiv").innerHTML = "Your Location: "+ jsonResponse.city})
+    }else{
+      document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location: with us";
     }
   }, false);
 
@@ -87,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var i;
       var out = "";
       for(i = 1; i < 6; i++) {
-        var x = Math.floor((Math.random() * 10) + 1);
+        var x = generate_randnum();
         sendTofetch.push("https://www."+ myArr[x]);
         out += '>> https://www.'+ myArr[x] + '<br>';
       }
@@ -148,11 +173,11 @@ function storeindB() {
     total       : document.getElementById("total").innerHTML
   };
   const myJSON = JSON.stringify(record);
-  document.getElementById("demo").innerHTML = myJSON;
+  //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost/phpstore.php", true);
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  xhr.open("POST", "http://34.89.29.21/phpstore.php");
+  xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
 browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
@@ -176,33 +201,5 @@ browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
     document.getElementById("total").innerHTML = Math.round(t.duration);
     document.getElementById("requestStart").innerHTML = new Date(t.start).toString();
     document.getElementById("tabUrl").innerHTML = tab.url;
-    // storeindB();
-
-    const record = {
-      timestamp   : document.getElementById("requestStart").innerHTML,
-      url         : document.getElementById("tabUrl").innerHTML,
-      redirect    : document.getElementById("redirect").innerHTML,
-      dns         : document.getElementById("dns").innerHTML,
-      connect     : document.getElementById("connect").innerHTML,
-      request     : document.getElementById("request").innerHTML,
-      response    : document.getElementById("response").innerHTML,
-      dom         : document.getElementById("dom").innerHTML,
-      domParse    : document.getElementById("domParse").innerHTML,
-      domScripts  : document.getElementById("domScripts").innerHTML,
-      contentLoaded: document.getElementById("contentLoaded").innerHTML,
-      domSubRes   : document.getElementById("domSubRes").innerHTML,
-      load        : document.getElementById("load").innerHTML,
-      total       : document.getElementById("total").innerHTML
-    };
-    const myJSON = JSON.stringify(record);
-    //document.getElementById("demo").innerHTML = myJSON;
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://34.89.29.21/phpstore.php");
-    xhr.setRequestHeader("Content-type", "application/json")
-    xhr.send(myJSON);
-    //document.getElementById("demo2").innerHTML = myJSON;
-
   });
-
 });
