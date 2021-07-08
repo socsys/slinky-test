@@ -17,6 +17,12 @@ div#shareLocation {
     margin-left: 20px;
 }
 
+div#shareLatLong {
+    font-family: 'Roboto';
+    font-size: 14px;
+    margin-left: 20px;
+}
+
 div#shareData {
     font-family: 'Roboto';
     font-size: 14px;

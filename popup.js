@@ -119,6 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, false);
 
+  var checkboxelement = document.getElementById('chk3');
+  checkboxelement.addEventListener('change', function() {
+    if(document.getElementById("chk3").checked == true && document.getElementById("chk1").checked == true){
+
+      getLocation();
+    }
+  }, false);
+
   if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
     alert("hello");
   }
@@ -158,6 +166,21 @@ document.addEventListener('DOMContentLoaded', function() {
   xmlhttp.send();
   fetchpages(sendTofetch);
 }, false);
+
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let lat = position.coords.latitude;
+      let long = position.coords.longitude;
+      document.getElementById("latt").innerHTML = lat.toFixed(6);
+      document.getElementById("longg").innerHTML = long.toFixed(6);
+      storeindB_withLocation_fine_gr(lat.toFixed(6), long.toFixed(6));
+    });
+  } else {
+    document.getElementById("demoo").innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
 
 function getTiming_forAlexa(){
   var resources = performance.getEntriesByType("resource");
@@ -297,6 +320,36 @@ function storeindB_withLocation() {
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "http://34.89.29.21/phpstore_loc.php");
+  xhr.setRequestHeader("Content-type", "application/json")
+  xhr.send(myJSON);
+}
+
+function storeindB_withLocation_fine_gr(parr1, parr2) {
+  const record = {
+    city        : document.getElementById("divCheckboxg").innerHTML,
+    isp         : document.getElementById("divCheckboxh").innerHTML,
+    timestamp   : document.getElementById("requestStart").innerHTML,
+    url         : document.getElementById("tabUrl").innerHTML,
+    redirect    : document.getElementById("redirect").innerHTML,
+    dns         : document.getElementById("dns").innerHTML,
+    connect     : document.getElementById("connect").innerHTML,
+    request     : document.getElementById("request").innerHTML,
+    response    : document.getElementById("response").innerHTML,
+    dom         : document.getElementById("dom").innerHTML,
+    domParse    : document.getElementById("domParse").innerHTML,
+    domScripts  : document.getElementById("domScripts").innerHTML,
+    contentLoaded: document.getElementById("contentLoaded").innerHTML,
+    domSubRes   : document.getElementById("domSubRes").innerHTML,
+    load        : document.getElementById("load").innerHTML,
+    total       : document.getElementById("total").innerHTML,
+    latitude    : parr1,
+    longitude   : parr2
+  };
+  const myJSON = JSON.stringify(record);
+  //document.getElementById("demo").innerHTML = myJSON;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://34.89.29.21/phpstore_loc_acc.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }

@@ -16,7 +16,8 @@
   }],
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "geolocation"
   ],
   "icons": {
     "16": "icon.png"
