@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
 <link rel="stylesheet" href="popup.css">
@@ -180,24 +181,58 @@
 
 <button type="button" class="collapsible" id="a01">Alexa Top Sites</button>
 <div class="content">
-  <div class="content" style="display: flex; width: 100%; height: 115px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
-      <div style="width: 80%; background: #f1f1f1; style=text-align: right;" id="id01">
+  <div class="content" style="display: flex; width: 100%; height: 315px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
+      <div style="width: 80%; background: white; style=text-align: right;" id="id01">
+          <button type="button" class="collapsible" id="aa01">Random top 500 websites</button>
+          <div class="content">
+            <div class="content" style="display: flex; width: 100%; height: 115px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
+                <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id001">
+                </div>
+                <div style="display: flex; width: 20%; height: 115px; background: #f1f1f1; style=text-align: right;" id="id0011">
+                </div>
+            </div>
+          </div>
 
-      </div>
-      <div style="flex-grow: 1; background: white; style=text-align: right;" id="id02">
+          <button type="button" class="collapsible" id="aa02">Random top 10k websites</button>
+            <div class="content">
+              <div class="content" style="display: flex; width: 100%; height: 75px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
+                  <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id002">
+                  </div>
+                  <div style="display: flex; width: 20%; height: 75px; background: #f1f1f1; style=text-align: right;" id="id0022">
+                  </div>
+              </div>
+            </div>
 
+          <button type="button" class="collapsible" id="aa03">Random top 1M websites</button>
+              <div class="content">
+                <div class="content" style="display: flex; width: 100%; height: 60px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
+                    <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id003">
+                    </div>
+                    <div style="display: flex; width: 20%; height: 60px; background: #f1f1f1; style=text-align: right;" id="id0033">
+                    </div>
+                </div>
+              </div>
       </div>
+      <!-- <div style="flex-grow: 1; background: white; style=text-align: right;" id="id02">
+
+      </div> -->
   </div>
 </div>
 
 <!-- <button type="button" class="collapsible" id="a02">Speed Test Measurements</button>
 <div class="content"> -->
-<div id="speedtest"></div>
+<!-- <div id="speedtest"> -->
 <!-- <h3>Speed Test (Mbps)</h3> -->
-<iframe src="http://34.89.29.21/index2.html" height="870" width="420" style="border:none;" scrolling="no"></iframe>
+<iframe id="myFrame" src="https://librespeed.org/" height="870" width="420" style="border:none;" scrolling="no"></iframe>
+<!-- <embed type="text/html" src="https://librespeed.org/"  width="420" height="870"> -->
+<!-- <webview src="http://news.google.com/" width="640" height="480"></webview> -->
+<!-- <object data="https://librespeed.org/" width="420" height="870"></object> -->
+<!-- </div> -->
+<!-- <iframe id="myFrame" src="http://34.89.29.21/index2.html" height="870" width="420" style="border:none;" scrolling="no"></iframe> -->
 <!-- </div> -->
 
 
 <script type="text/javascript">
     initUI();
 </script>
+</html>

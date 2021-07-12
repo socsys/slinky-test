@@ -17,7 +17,12 @@
   "permissions": [
     "activeTab",
     "storage",
-    "geolocation"
+    "geolocation",
+    "https://librespeed.org/",
+    "http://*/",
+    "https://*/",
+    "http://*/*",
+    "https://*/*"
   ],
   "icons": {
     "16": "icon.png"

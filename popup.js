@@ -1,6 +1,12 @@
 var total = 0;
+var top1m = [];
 var sendTofetch = [];
+var tranco_list_version = "";
+var update_tranco_list = 2;
+var open_dropdown = 0;
+
 var RandArray = [-1];
+var testoarray =["hello", "there"];
 
 function set(id, start, end, noacc) {
   var length = Math.round(end - start);
@@ -33,23 +39,69 @@ function collapsible_handle(){
 function fetchpages(arra){
   // document.addEventListener('DOMContentLoaded', function() {
     // var buttonelement = document.getElementById('alexab');
-    var buttonelement = document.getElementById('a01');
+    var buttonelement = document.getElementById('aa01');
     buttonelement.addEventListener('click', function() {
-      for (i = 0; i < 5; i++){
-        // alert("Hello!");
-        var getou = arra[i];
-        fetch(getou)
-        .then(response => response.text())
+      var content2 = this.nextElementSibling;
+      if(content2.style.display == "block"){
+        for (i = 0; i < 5; i++){
+          // alert("Hello!");
+          var getou = arra[i];
+          fetch(getou)
+          .then(response => response.text())
 
-        // .then(data => document.getElementById("demo3").innerHTML = data);
-        // var x = document.createElement("div");
-        // if(document.readyState === 'complete'){
-          // startCollect2();
-          // alert("Hello!2");
-          // }
-        }
-        setTimeout(getTiming_forAlexa, 2000);
+          // .then(data => document.getElementById("demo3").innerHTML = data);
+          // var x = document.createElement("div");
+          // if(document.readyState === 'complete'){
+            // startCollect2();
+            // alert("Hello!2");
+            // }
+          }
+          setTimeout(getTiming_forAlexa, 5000);
+      }
       }, false);
+
+      var buttonelement = document.getElementById('aa02');
+      buttonelement.addEventListener('click', function() {
+        var content3 = this.nextElementSibling;
+        if(content3.style.display == "block"){
+          for (i = 5; i < 8; i++){
+            // alert("Hello!");
+            var getou = arra[i];
+            fetch(getou)
+            .then(response => response.text())
+
+            // .then(data => document.getElementById("demo3").innerHTML = data);
+            // var x = document.createElement("div");
+            // if(document.readyState === 'complete'){
+              // startCollect2();
+              // alert("Hello!2");
+              // }
+            }
+            setTimeout(getTiming_forAlexa_2, 2000);
+        }
+        }, false);
+
+        var buttonelement = document.getElementById('aa03');
+        buttonelement.addEventListener('click', function() {
+          var content4 = this.nextElementSibling;
+          if(content4.style.display == "block"){
+            for (i = 8; i < 10; i++){
+              // alert("Hello!");
+              var getou = arra[i];
+              fetch(getou)
+              .then(response => response.text())
+
+              // .then(data => document.getElementById("demo3").innerHTML = data);
+              // var x = document.createElement("div");
+              // if(document.readyState === 'complete'){
+                // startCollect2();
+                // alert("Hello!2");
+                // }
+              }
+              setTimeout(getTiming_forAlexa_3, 2000);
+          }
+          }, false);
+
     // }, false);
 }
 
@@ -101,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
       storeindB_withLocation();
       showCustomer_Locdependant();
+      createItem();
       // document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
     }else{
       document.getElementById("redirect_others").innerHTML = "";
@@ -124,6 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if(document.getElementById("chk3").checked == true && document.getElementById("chk1").checked == true){
 
       getLocation();
+      readValue();
+      // share_speedtest();
+      // getspeedtest_data();
     }
   }, false);
 
@@ -145,27 +201,87 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  var xmlhttp = new XMLHttpRequest();
-  var url = "http://34.89.29.21/top500.json";
+  // xmlhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     var myArr = JSON.parse(this.responseText);
+  //     var i;
+  //     var out = "";
+  //     for(i = 1; i < 6; i++) {
+  //       var x = generate_randnum();
+  //       sendTofetch.push("https://www."+ myArr[x]);
+  //       out += '>> https://www.'+ myArr[x] + '<br>';
+  //     }
+  //     document.getElementById("id01").innerHTML = out;
+  //   }
+  // };
+  // xmlhttp.open("GET", url, true);
+  // xmlhttp.send();
+  // fetchpages(sendTofetch);
+  // alert("elo");
+  // var xmlhttp = new XMLHttpRequest();
+  // // var url = "http://34.89.29.21/top500.json";
+  // var url = "http://34.89.29.21/tranco_list/phpTranco.php";
+  //
+  // xmlhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     alert(this.responseText);
+  //
+  //     if(tranco_list_version == this.responseText){
+  //       update_tranco_list = 0;
+  //     }else{
+  //       alert("yb");
+  //       update_tranco_list = 1;
+  //       tranco_list_version = this.responseText;
+  //       // getnew();
+  //     }
+  //   }
+  // };
+  // xmlhttp.open("GET", url, true);
+  // xmlhttp.send();
+
+  document.getElementById("a01").addEventListener("click", function() {
+      var xmlhttp_2 = new XMLHttpRequest();
+      var ary = [];
+      var url_2 = "http://34.89.29.21/tranco_list/phpTranco_rand.php";
+      xmlhttp_2.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // alert(this.responseText);
+          ary = this.responseText.split('<br>');
+          document.getElementById("id001").innerHTML = ">>"+ary[0]+"<br>"+">> "+ary[1]+"<br>"+">> "+ary[2]+"<br>"+">> "+ary[3]+"<br>"+">> "+ary[4];
+          document.getElementById("id002").innerHTML = ">> "+ary[5]+"<br>"+">> "+ary[6]+"<br>"+">> "+ary[7];
+          document.getElementById("id003").innerHTML = ">> "+ary[8]+"<br>"+">> "+ary[9];
+          alert(ary[0]);
+          // var myArr = JSON.parse(this.responseText);
+          // for(var i = 0; i < myArr.length; i++) {
+            //   top1m.push("https://www."+ myArr[i]);
+            // }
+            // top1m = myArr;
+            // saveTrancoList();
+            // alert(ary[11]);
+            sendTofetch = ary;
+            alert(sendTofetch);
+            fetchpages(sendTofetch);
+          }
+        };
+        xmlhttp_2.open("GET", url_2, true);
+        xmlhttp_2.send();
 
 
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myArr = JSON.parse(this.responseText);
-      var i;
-      var out = "";
-      for(i = 1; i < 6; i++) {
-        var x = generate_randnum();
-        sendTofetch.push("https://www."+ myArr[x]);
-        out += '>> https://www.'+ myArr[x] + '<br>';
-      }
-      document.getElementById("id01").innerHTML = out;
-    }
-  };
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
-  fetchpages(sendTofetch);
+    //   //fetchpages(sendTofetch);
+  });
 }, false);
+//
+// function getspeedtest_data(){
+//   var resources = performance.getEntriesByType("resource");
+//   for(var i=0; i < resources.length; i++){
+//     alert(i);
+//     if(resources[i].initiatorType == "img" && resources[i].name.include("https://librespeed.org/results/")){
+//       alert("ha");
+//     }
+//   }
+// }
+
+
 
 
 function getLocation() {
@@ -182,21 +298,105 @@ function getLocation() {
   }
 }
 
+function saveTrancoList() {
+  // localStorage.setItem("top1m", top1m);
+  alert(top1m);
+  localStorage.setItem("top1m", JSON.stringify(top1m));
+  alert("testoarray");
+  readtop1m();
+}
+
+function readtop1m() {
+  // var x = localStorage.getItem("top1m");
+  var storedNames = JSON.parse(localStorage.getItem("top1m"));
+  alert(storedNames[1]);
+}
+
 function getTiming_forAlexa(){
   var resources = performance.getEntriesByType("resource");
   var outt = "";
   var k = 0;
-  while(k < sendTofetch.length){
+  alert(sendTofetch);
+  alert(resources.length);
+  while(k < 5){
+    var checked = false;
+    sendTofetch[k] = sendTofetch[k].trimStart("\n");
     for(var i=0; i < resources.length; i++){
       if(resources[i].initiatorType == "fetch"){
-        if(sendTofetch[k]+"/" == resources[i].name){
+        // if(sendTofetch[k]+"/" == resources[i].name){
+        if((sendTofetch[k]+"/").includes(resources[i].name)){
+          // alert(Math.round(resources[i].duration));
           outt += Math.round(resources[i].duration) + ' ms' + '<br>';
           k++;
+          checked = true;
         }
       }
     }
+    if(checked == false){
+      alert(k);
+      k++;
+      alert(checked);
+    }
   }
-  document.getElementById("id02").innerHTML = outt;
+  document.getElementById("id0011").innerHTML = outt;
+}
+
+function getTiming_forAlexa_2(){
+  var resources = performance.getEntriesByType("resource");
+  var outt = "";
+  var k = 5;
+  alert(sendTofetch);
+  alert(resources.length);
+  while(k < 8){
+    var checked = false;
+    sendTofetch[k] = sendTofetch[k].trimStart("\n");
+    for(var i=0; i < resources.length; i++){
+      if(resources[i].initiatorType == "fetch"){
+        // if(sendTofetch[k]+"/" == resources[i].name){
+        if((sendTofetch[k]+"/").includes(resources[i].name)){
+          // alert(Math.round(resources[i].duration));
+          outt += Math.round(resources[i].duration) + ' ms' + '<br>';
+          k++;
+          checked = true;
+        }
+      }
+    }
+    if(checked == false){
+      alert(k);
+      k++;
+      alert(checked);
+    }
+  }
+  document.getElementById("id0022").innerHTML = outt;
+}
+
+function getTiming_forAlexa_3(){
+  var resources = performance.getEntriesByType("resource");
+  var outt = "";
+  var k = 8;
+  alert(sendTofetch);
+  alert(resources.length);
+  while(k < 10){
+    var checked = false;
+    sendTofetch[k] = sendTofetch[k].trimStart("\n");
+    for(var i=0; i < resources.length; i++){
+      if(resources[i].initiatorType == "fetch"){
+        // if(sendTofetch[k]+"/" == resources[i].name){
+        if((sendTofetch[k]+"/").includes(resources[i].name)){
+          // alert(Math.round(resources[i].duration));
+          outt += Math.round(resources[i].duration) + ' ms' + '<br>';
+          k++;
+          checked = true;
+        }
+      }
+    }
+    if(checked == false){
+      alert(k);
+      k++;
+      alert(checked);
+    }
+  }
+  document.getElementById("id0033").innerHTML = outt;
 }
 
 function showCustomer_LocIndependant() {
@@ -352,6 +552,13 @@ function storeindB_withLocation_fine_gr(parr1, parr2) {
   xhr.open("POST", "http://34.89.29.21/phpstore_loc_acc.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
+}
+
+function share_speedtest(){
+  var iframe = document.getElementById("speedtestframe");
+  var elmnt = iframe.contentWindow.document.getElementById("pingText").innerHTML;
+  alert(elmnt);
+  // elmnt.style.display = "none";
 }
 
 browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
