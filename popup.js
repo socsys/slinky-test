@@ -230,6 +230,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == true){
       getLocation();
+      showCustomer_Locdependant();
+      showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
+      showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
+      showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
+      showCustomer_Locdependant_alexa("s2","1m");
     }
     if(document.getElementById("chk1").checked == false){
       document.getElementById("error").innerHTML = "Please make sure that the first checkbox is checked";
@@ -295,8 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
   checkboxelement.addEventListener('change', function() {
     if(document.getElementById("chk3").checked == true && document.getElementById("chk1").checked == true){
 
-      getLocation();
-      readValue();
+      // getLocation();
+      // readValue();
       // share_speedtest();
       // getspeedtest_data();
     }
@@ -597,6 +602,9 @@ function storeindB_withLocation() {
 }
 
 function storeindB_withLocation_fine_gr(parr1, parr2) {
+  var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
+  var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
+
   const record = {
     city        : document.getElementById("divCheckboxg").innerHTML,
     isp         : document.getElementById("divCheckboxh").innerHTML,
@@ -614,6 +622,8 @@ function storeindB_withLocation_fine_gr(parr1, parr2) {
     domSubRes   : document.getElementById("domSubRes").innerHTML,
     load        : document.getElementById("load").innerHTML,
     total       : document.getElementById("total").innerHTML,
+    website     : websites,
+    reqtime     : timings,
     latitude    : parr1,
     longitude   : parr2
   };
@@ -621,7 +631,7 @@ function storeindB_withLocation_fine_gr(parr1, parr2) {
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/phpstore_loc_acc.php");
+  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all_LatLong.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
