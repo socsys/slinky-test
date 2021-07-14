@@ -60,102 +60,84 @@
     Share location information - Latitude/Longitude
   </label>
 </div>
+
+<div id="butShare">
+  <button type="button" id="btn_s"> Share </button>
+</div>
+<div id="error" style="color: red; font-weight: bold;"></div>
 <!-- <div id="demoo"> HELLOOOOO </div> -->
 <div id="divCheckboxg" style="display: none;"> HELLOOOOO </div>
 <div id="divCheckboxh" style="display: none;"> HELLOOOOO </div>
 <div id="latt" style="display: none;"> HELLOOOOO </div>
 <div id="longg" style="display: none;"> HELLOOOOO </div>
+
 <br>
-<button type="button" class="collapsible" id="a00">Current Page Load Time</button>
+
+<button type="button" class="collapsible" id="a00">Performance in loading current website</button>
+
 <div class="content">
 <h3>Load timings (ms)</h3>
 <div id="container">
     <div id="header">
         <span>Event</span>
-        <!-- <span>Start</span>
-        <span>Duration</span>
-        <span>End</span> -->
-
         <span>Time in ms</span>
         <span>Average time for others in ms</span>
 
     </div>
     <div class="row" id="r-redirect">
         <span>Redirect</span>
-        <!-- <span id="redirectWhen"></span> -->
         <span id="redirect"></span>
         <span id="redirect_others"></span>
-        <!-- <span id="redirectTotal"></span> -->
     </div>
     <div class="row" id="r-dns">
         <span>DNS</span>
-        <!-- <span id="dnsWhen"></span> -->
         <span id="dns"></span>
         <span id="dns_others"></span>
-        <!-- <span id="dnsTotal"></span> -->
     </div>
     <div class="row" id="r-connect">
         <span>Connect</span>
-        <!-- <span id="connectWhen"></span> -->
         <span id="connect"></span>
         <span id="connect_others"></span>
-        <!-- <span id="connectTotal"></span> -->
     </div>
     <div class="row" id="r-request">
         <span>Request</span>
-        <!-- <span id="requestWhen"></span> -->
         <span id="request"></span>
         <span id="request_others"></span>
-        <!-- <span id="requestTotal"></span> -->
     </div>
     <div class="row" id="r-response">
         <span>Response</span>
-        <!-- <span id="responseWhen"></span> -->
         <span id="response"></span>
         <span id="response_others"></span>
-        <!-- <span id="responseTotal"></span> -->
     </div>
     <div class="row" id="r-dom">
         <span>DOM</span>
-        <!-- <span id="domWhen"></span> -->
         <span id="dom"></span>
         <span id="dom_others"></span>
-        <!-- <span id="domTotal"></span> -->
     </div>
     <div class="row" id="r-domParse">
         <span class="sub">Parse</span>
-        <!-- <span id="domParseWhen"></span> -->
         <span id="domParse"></span>
         <span id="domParse_others"></span>
-        <!-- <span id="domParseTotal"></span> -->
     </div>
     <div class="row" id="r-domScripts">
         <span class="sub">Execute Scripts</span>
-        <!-- <span id="domScriptsWhen"></span> -->
         <span id="domScripts"></span>
         <span id="domScripts_others"></span>
-        <!-- <span id="domScriptsTotal"></span> -->
     </div>
     <div class="row" id="r-contentLoaded">
         <span class="sub">Content loaded</span>
-        <!-- <span id="contentLoadedWhen"></span> -->
         <span id="contentLoaded"></span>
         <span id="contentLoaded_others"></span>
-        <!-- <span id="contentLoadedTotal"></span> -->
     </div>
     <div class="row" id="r-domSubRes">
         <span class="sub">Sub Resources</span>
-        <!-- <span id="domSubResWhen"></span> -->
         <span id="domSubRes"></span>
         <span id="domSubRes_others"></span>
-        <!-- <span id="domSubResTotal"></span> -->
     </div>
     <div class="row" id="r-load">
         <span>Load event</span>
-        <!-- <span id="loadWhen"></span> -->
         <span id="load"></span>
         <span id="load_others"></span>
-        <!-- <span id="loadTotal"></span> -->
     </div>
     <div class="row" id="r-total">
         <span>Total</span>
@@ -165,22 +147,96 @@
     <div class="row" id="demo">
     </div>
   </div>
-
 </div>
 
-  <!-- <div class="row" id="demo2">
-    <button type="button" id="alexab">Click Me!</button>
-  </div>
-  <div id="demo3" style="display: none;">
-  </div>
-    <br> -->
-</div>
 <br>
 <!-- <div id="speedtest"></div> -->
 <!-- <h3>Top Alexa Sites</h3> -->
 
-<button type="button" class="collapsible" id="a01">Alexa Top Sites</button>
+<button type="button" class="collapsible" id="sa">Performance in loading popular wesbites</button>
+
 <div class="content">
+<h3>Load timings (ms)</h3>
+<div id="container">
+    <div id="header">
+        <span>A random selection from</span>
+        <span>Time in ms</span>
+        <span>Average time for others in ms</span>
+
+    </div>
+    <div class="row" id="r-top500" style="font-weight: bold">
+        <span>Top 500 websites</span>
+        <span id="rr-500"></span>
+        <span id="rr_others-500"></span>
+    </div>
+    <div class="row" id="r-s1-500">
+        <span class="sub" id="sr-s1-500">Parse</span>
+        <span id="d-s1-500"></span>
+        <span id="d-s1_others-500"></span>
+    </div>
+    <div class="row" id="r-s2-500">
+        <span class="sub" id="sr-s2-500">Parse</span>
+        <span id="d-s2-500"></span>
+        <span id="d-s2_others-500"></span>
+    </div>
+    <div class="row" id="r-s3-500">
+        <span class="sub" id="sr-s3-500">Parse</span>
+        <span id="d-s3-500"></span>
+        <span id="d-s3_others-500"></span>
+    </div>
+    <div class="row" id="r-s4-500">
+        <span class="sub" id="sr-s4-500">Parse</span>
+        <span id="d-s4-500"></span>
+        <span id="d-s4_others-500"></span>
+    </div>
+    <div class="row" id="r-s5-500">
+        <span class="sub" id="sr-s5-500">Parse</span>
+        <span id="d-s5-500"></span>
+        <span id="d-s5_others-500"></span>
+    </div>
+
+
+    <div class="row" id="r-top10k" style="font-weight: bold">
+        <span>Top 10k websites</span>
+        <span id="rr-10k"></span>
+        <span id="rr_others-10k"></span>
+    </div>
+    <div class="row" id="r-s1-10k">
+        <span class="sub" id="sr-s1-10k">Parse</span>
+        <span id="d-s1-10k"></span>
+        <span id="d-s1_others-10k"></span>
+    </div>
+    <div class="row" id="r-s2-10k">
+        <span class="sub" id="sr-s2-10k">Parse</span>
+        <span id="d-s2-10k"></span>
+        <span id="d-s2_others-10k"></span>
+    </div>
+    <div class="row" id="r-s3-10k">
+        <span class="sub" id="sr-s3-10k">Parse</span>
+        <span id="d-s3-10k"></span>
+        <span id="d-s3_others-10k"></span>
+    </div>
+
+    <div class="row" id="r-top1m" style="font-weight: bold">
+        <span>Top 1M websites</span>
+        <span id="rr-1m"></span>
+        <span id="rr_others-1m"></span>
+    </div>
+    <div class="row" id="r-s1-1m">
+        <span class="sub" id="sr-s1-1m">Parse</span>
+        <span id="d-s1-1m"></span>
+        <span id="d-s1_others-1m"></span>
+    </div>
+    <div class="row" id="r-s2-1m">
+        <span class="sub" id="sr-s2-1m">Parse</span>
+        <span id="d-s2-1m"></span>
+        <span id="d-s2_others-1m"></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="content">
   <div class="content" style="display: flex; width: 100%; height: 315px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
       <div style="width: 80%; background: white; style=text-align: right;" id="id01">
           <button type="button" class="collapsible" id="aa01">Random top 500 websites</button>
@@ -216,8 +272,6 @@
       <!-- <div style="flex-grow: 1; background: white; style=text-align: right;" id="id02">
 
       </div> -->
-  </div>
-</div>
 
 <!-- <button type="button" class="collapsible" id="a02">Speed Test Measurements</button>
 <div class="content"> -->

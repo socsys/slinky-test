@@ -5,6 +5,9 @@ var tranco_list_version = "";
 var update_tranco_list = 2;
 var open_dropdown = 0;
 
+var ary = [];
+
+
 var RandArray = [-1];
 var testoarray =["hello", "there"];
 
@@ -117,21 +120,137 @@ function generate_randnum(){
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+function startCollect_topSites() {
+
+  var xmlhttp = new XMLHttpRequest();
+  var url = "http://34.89.29.21/tranco_list/phpTranco_rand.php";
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      ary = this.responseText.split('<br>');
+      document.getElementById("sr-s1-500").innerHTML = ary[0];
+      document.getElementById("sr-s2-500").innerHTML = ary[1];
+      document.getElementById("sr-s3-500").innerHTML = ary[2];
+      document.getElementById("sr-s4-500").innerHTML = ary[3];
+      document.getElementById("sr-s5-500").innerHTML = ary[4];
+
+      document.getElementById("sr-s1-10k").innerHTML = ary[5];
+      document.getElementById("sr-s2-10k").innerHTML = ary[6];
+      document.getElementById("sr-s3-10k").innerHTML = ary[7];
+
+      document.getElementById("sr-s1-1m").innerHTML = ary[8];
+      document.getElementById("sr-s2-1m").innerHTML = ary[9];
+      fetchpages(ary);
+    }
+  };
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
+
+function fetchpages(arra){
+  for (i = 0; i < 10; i++){
+    var getou = arra[i];
+    fetch(getou)
+    .then(response => response.text())
+  }
+  setTimeout(getTiming_forAlexa_New, 10000);
+}
+
+function getTiming_forAlexa_New(){
+  var resources = performance.getEntriesByType("resource");
+  for(var i=0; i < resources.length; i++){
+    if(resources[i].initiatorType == "fetch"){
+
+      if((document.getElementById("sr-s1-500").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s1-500").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s2-500").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s2-500").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s3-500").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s3-500").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s4-500").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s4-500").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s5-500").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s5-500").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s1-10k").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s1-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s2-10k").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s2-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s3-10k").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s3-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s1-1m").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s1-1m").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+
+      if((document.getElementById("sr-s2-1m").innerHTML+"/").includes(resources[i].name)){
+        document.getElementById("d-s2-1m").innerHTML = Math.round(resources[i].duration)+" ms";
+      }
+    }
+  }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 document.addEventListener('DOMContentLoaded', function() {
 
-  // Get user location information
+  startCollect_topSites();
+  document.getElementById("btn_s").addEventListener("click", function() {
+
+    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == false && document.getElementById("chk3").checked == false){
+      storeindB_withoutLocation();
+      showCustomer_LocIndependant_plt();
+      showCustomer_LocIndependant_alexa("s1","500");showCustomer_LocIndependant_alexa("s2","500");showCustomer_LocIndependant_alexa("s3","500");
+      showCustomer_LocIndependant_alexa("s4","500");showCustomer_LocIndependant_alexa("s5","500");showCustomer_LocIndependant_alexa("s1","10k");
+      showCustomer_LocIndependant_alexa("s2","10k");showCustomer_LocIndependant_alexa("s3","10k");showCustomer_LocIndependant_alexa("s1","1m");
+      showCustomer_LocIndependant_alexa("s2","1m");
+    }
+    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == false){
+      storeindB_withLocation();
+      showCustomer_Locdependant();
+      showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
+      showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
+      showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
+      showCustomer_Locdependant_alexa("s2","1m");
+    }
+    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == true){
+      getLocation();
+    }
+    if(document.getElementById("chk1").checked == false){
+      document.getElementById("error").innerHTML = "Please make sure that the first checkbox is checked";
+    }
+  });
 
   fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
   (response) => response.json()).then((jsonResponse) => {document.getElementById("divCheckboxg").innerHTML = jsonResponse.city
   document.getElementById("divCheckboxh").innerHTML = jsonResponse.org})
+
+  // Get user location information
+
+
 
   ///////////////////////////////////
 
   var checkboxelement = document.getElementById('chk1');
   checkboxelement.addEventListener('change', function() {
     if(document.getElementById("chk1").checked == true){
-      storeindB_withoutLocation();
-      showCustomer_LocIndependant();
+      // storeindB_withoutLocation();
+      // showCustomer_LocIndependant();
     }else{
       document.getElementById("redirect_others").innerHTML = "";
       document.getElementById("dns_others").innerHTML = "";
@@ -151,9 +270,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var checkboxelement = document.getElementById('chk2');
   checkboxelement.addEventListener('change', function() {
     if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
-      storeindB_withLocation();
-      showCustomer_Locdependant();
-      createItem();
+      // storeindB_withLocation();
+      // showCustomer_Locdependant();
+      // createItem();
       // document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
     }else{
       document.getElementById("redirect_others").innerHTML = "";
@@ -298,108 +417,7 @@ function getLocation() {
   }
 }
 
-function saveTrancoList() {
-  // localStorage.setItem("top1m", top1m);
-  alert(top1m);
-  localStorage.setItem("top1m", JSON.stringify(top1m));
-  alert("testoarray");
-  readtop1m();
-}
-
-function readtop1m() {
-  // var x = localStorage.getItem("top1m");
-  var storedNames = JSON.parse(localStorage.getItem("top1m"));
-  alert(storedNames[1]);
-}
-
-function getTiming_forAlexa(){
-  var resources = performance.getEntriesByType("resource");
-  var outt = "";
-  var k = 0;
-  alert(sendTofetch);
-  alert(resources.length);
-  while(k < 5){
-    var checked = false;
-    sendTofetch[k] = sendTofetch[k].trimStart("\n");
-    for(var i=0; i < resources.length; i++){
-      if(resources[i].initiatorType == "fetch"){
-        // if(sendTofetch[k]+"/" == resources[i].name){
-        if((sendTofetch[k]+"/").includes(resources[i].name)){
-          // alert(Math.round(resources[i].duration));
-          outt += Math.round(resources[i].duration) + ' ms' + '<br>';
-          k++;
-          checked = true;
-        }
-      }
-    }
-    if(checked == false){
-      alert(k);
-      k++;
-      alert(checked);
-    }
-  }
-  document.getElementById("id0011").innerHTML = outt;
-}
-
-function getTiming_forAlexa_2(){
-  var resources = performance.getEntriesByType("resource");
-  var outt = "";
-  var k = 5;
-  alert(sendTofetch);
-  alert(resources.length);
-  while(k < 8){
-    var checked = false;
-    sendTofetch[k] = sendTofetch[k].trimStart("\n");
-    for(var i=0; i < resources.length; i++){
-      if(resources[i].initiatorType == "fetch"){
-        // if(sendTofetch[k]+"/" == resources[i].name){
-        if((sendTofetch[k]+"/").includes(resources[i].name)){
-          // alert(Math.round(resources[i].duration));
-          outt += Math.round(resources[i].duration) + ' ms' + '<br>';
-          k++;
-          checked = true;
-        }
-      }
-    }
-    if(checked == false){
-      alert(k);
-      k++;
-      alert(checked);
-    }
-  }
-  document.getElementById("id0022").innerHTML = outt;
-}
-
-function getTiming_forAlexa_3(){
-  var resources = performance.getEntriesByType("resource");
-  var outt = "";
-  var k = 8;
-  alert(sendTofetch);
-  alert(resources.length);
-  while(k < 10){
-    var checked = false;
-    sendTofetch[k] = sendTofetch[k].trimStart("\n");
-    for(var i=0; i < resources.length; i++){
-      if(resources[i].initiatorType == "fetch"){
-        // if(sendTofetch[k]+"/" == resources[i].name){
-        if((sendTofetch[k]+"/").includes(resources[i].name)){
-          // alert(Math.round(resources[i].duration));
-          outt += Math.round(resources[i].duration) + ' ms' + '<br>';
-          k++;
-          checked = true;
-        }
-      }
-    }
-    if(checked == false){
-      alert(k);
-      k++;
-      alert(checked);
-    }
-  }
-  document.getElementById("id0033").innerHTML = outt;
-}
-
-function showCustomer_LocIndependant() {
+function showCustomer_LocIndependant_plt() {
   str = document.getElementById("tabUrl").innerHTML;
   if (str == "") {
     document.getElementById("txtHint").innerHTML = "";
@@ -424,11 +442,57 @@ function showCustomer_LocIndependant() {
     document.getElementById("load_others").innerHTML = res[10];
     document.getElementById("total_others").innerHTML = res[11];
   }
-  xhttp.open("GET", "http://34.89.29.21/phpretrieve.php?q="+str);
+  xhttp.open("GET", "http://34.89.29.21/phpretrieve_plt.php?q="+str);
   xhttp.send();
 }
 
+function showCustomer_LocIndependant_alexa(p1,p2){
+  var strr = "";
+  strr = document.getElementById("sr-"+p1+"-"+p2).innerHTML.trimStart("\n");
+  if(strr == ""){
+    return;
+  }
+  const xhttp2 = new XMLHttpRequest();
+  xhttp2.onload = function() {
+    var result = this.responseText;
+    document.getElementById("d-"+p1+"_others-"+p2).innerHTML = result;
+
+  }
+  xhttp2.open("GET", "http://34.89.29.21/dbwork/phpretrieve_alexa.php?q="+strr);
+  xhttp2.send();
+}
+
+function showCustomer_Locdependant_alexa(p1,p2){
+  var strr = "";
+  strr = document.getElementById("sr-"+p1+"-"+p2).innerHTML.trimStart("\n");
+  if(strr == ""){
+    return;
+  }
+  strr2 = document.getElementById("divCheckboxg").innerHTML;
+  if (strr2 == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+
+  strr3 = document.getElementById("divCheckboxh").innerHTML;
+  if (strr3 == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  const xhttp2 = new XMLHttpRequest();
+  xhttp2.onload = function() {
+    var result = this.responseText;
+    document.getElementById("d-"+p1+"_others-"+p2).innerHTML = result;
+
+  }
+  xhttp2.open("GET", "http://34.89.29.21/dbwork/phpretrieve_alexa_cityLoc.php?q="+strr+"&r="+strr2+"&p="+strr3);
+  xhttp2.send();
+}
+
 function storeindB_withoutLocation() {
+
+  var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
+  var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
   const record = {
     timestamp   : document.getElementById("requestStart").innerHTML,
     url         : document.getElementById("tabUrl").innerHTML,
@@ -443,13 +507,15 @@ function storeindB_withoutLocation() {
     contentLoaded: document.getElementById("contentLoaded").innerHTML,
     domSubRes   : document.getElementById("domSubRes").innerHTML,
     load        : document.getElementById("load").innerHTML,
-    total       : document.getElementById("total").innerHTML
+    total       : document.getElementById("total").innerHTML,
+    website     : websites,
+    reqtime     : timings
   };
   const myJSON = JSON.stringify(record);
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/phpstore.php");
+  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
@@ -492,11 +558,15 @@ function showCustomer_Locdependant() {
     document.getElementById("load_others").innerHTML = res[10];
     document.getElementById("total_others").innerHTML = res[11];
   }
-  xhttp.open("GET", "http://34.89.29.21/phpretrieve_loc.php?q="+str1+"&r="+str2+"&p="+str3);
+  xhttp.open("GET", "http://34.89.29.21/dbwork/phpretrieve_plt_cityLoc.php?q="+str1+"&r="+str2+"&p="+str3);
   xhttp.send();
 }
 
 function storeindB_withLocation() {
+
+  var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
+  var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
+
   const record = {
     city        : document.getElementById("divCheckboxg").innerHTML,
     isp         : document.getElementById("divCheckboxh").innerHTML,
@@ -513,13 +583,15 @@ function storeindB_withLocation() {
     contentLoaded: document.getElementById("contentLoaded").innerHTML,
     domSubRes   : document.getElementById("domSubRes").innerHTML,
     load        : document.getElementById("load").innerHTML,
-    total       : document.getElementById("total").innerHTML
+    total       : document.getElementById("total").innerHTML,
+    website     : websites,
+    reqtime     : timings
   };
   const myJSON = JSON.stringify(record);
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/phpstore_loc.php");
+  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all_cityLoc.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
@@ -552,13 +624,6 @@ function storeindB_withLocation_fine_gr(parr1, parr2) {
   xhr.open("POST", "http://34.89.29.21/phpstore_loc_acc.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
-}
-
-function share_speedtest(){
-  var iframe = document.getElementById("speedtestframe");
-  var elmnt = iframe.contentWindow.document.getElementById("pingText").innerHTML;
-  alert(elmnt);
-  // elmnt.style.display = "none";
 }
 
 browser.tabs.query({active: true, currentWindow: true}).then(tabs => {

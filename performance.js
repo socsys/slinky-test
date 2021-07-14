@@ -3,8 +3,10 @@
 
   if (document.readyState === 'complete') {
     startCollect();
+    //startCollect_topSites();
   } else {
     window.addEventListener('load', startCollect);
+    //window.addEventListener('load', startCollect_topSites);
   }
 
   function startCollect() {
