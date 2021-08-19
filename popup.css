@@ -9,6 +9,12 @@ div#check\ sharing {
     font-weight: bold;
 }
 
+div#consent {
+    font-size: 15px;
+    font-weight: bold;
+    color: red;
+}
+
 div#shareLocation {
     font-family: 'Roboto';
     font-size: 14px;

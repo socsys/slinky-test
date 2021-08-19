@@ -1,6 +1,6 @@
 {
   "name": "Surrey Uni Browser Plugin",
-  "version": "3.2.1",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "Displays page load time in the toolbar",
   "background": {
@@ -17,12 +17,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "geolocation",
-    "https://librespeed.org/",
-    "http://*/",
-    "https://*/",
-    "http://*/*",
-    "https://*/*"
+    "geolocation"
   ],
   "icons": {
     "16": "icon.png"

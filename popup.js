@@ -125,7 +125,7 @@ function generate_randnum(){
 function startCollect_topSites() {
 
   var xmlhttp = new XMLHttpRequest();
-  var url = "http://34.89.29.21/tranco_list/phpTranco_rand.php";
+  var url = "http://measurements.duckdns.org/tranco_list/phpTranco_rand.php";
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       ary = this.responseText.split('<br>');
@@ -343,8 +343,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // fetchpages(sendTofetch);
   // alert("elo");
   // var xmlhttp = new XMLHttpRequest();
-  // // var url = "http://34.89.29.21/top500.json";
-  // var url = "http://34.89.29.21/tranco_list/phpTranco.php";
+  // // var url = "http://measurements.duckdns.org/top500.json";
+  // var url = "http://measurements.duckdns.org/tranco_list/phpTranco.php";
   //
   // xmlhttp.onreadystatechange = function() {
   //   if (this.readyState == 4 && this.status == 200) {
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById("a01").addEventListener("click", function() {
       var xmlhttp_2 = new XMLHttpRequest();
       var ary = [];
-      var url_2 = "http://34.89.29.21/tranco_list/phpTranco_rand.php";
+      var url_2 = "http://measurements.duckdns.org/tranco_list/phpTranco_rand.php";
       xmlhttp_2.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           // alert(this.responseText);
@@ -447,7 +447,7 @@ function showCustomer_LocIndependant_plt() {
     document.getElementById("load_others").innerHTML = res[10];
     document.getElementById("total_others").innerHTML = res[11];
   }
-  xhttp.open("GET", "http://34.89.29.21/phpretrieve_plt.php?q="+str);
+  xhttp.open("GET", "http://measurements.duckdns.org/phpretrieve_plt.php?q="+str);
   xhttp.send();
 }
 
@@ -463,7 +463,7 @@ function showCustomer_LocIndependant_alexa(p1,p2){
     document.getElementById("d-"+p1+"_others-"+p2).innerHTML = result;
 
   }
-  xhttp2.open("GET", "http://34.89.29.21/dbwork/phpretrieve_alexa.php?q="+strr);
+  xhttp2.open("GET", "http://measurements.duckdns.org/dbwork/phpretrieve_alexa.php?q="+strr);
   xhttp2.send();
 }
 
@@ -490,7 +490,7 @@ function showCustomer_Locdependant_alexa(p1,p2){
     document.getElementById("d-"+p1+"_others-"+p2).innerHTML = result;
 
   }
-  xhttp2.open("GET", "http://34.89.29.21/dbwork/phpretrieve_alexa_cityLoc.php?q="+strr+"&r="+strr2+"&p="+strr3);
+  xhttp2.open("GET", "http://measurements.duckdns.org/dbwork/phpretrieve_alexa_cityLoc.php?q="+strr+"&r="+strr2+"&p="+strr3);
   xhttp2.send();
 }
 
@@ -520,7 +520,7 @@ function storeindB_withoutLocation() {
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all.php");
+  xhr.open("POST", "http://measurements.duckdns.org/dbwork/phpstore_all.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
@@ -563,7 +563,7 @@ function showCustomer_Locdependant() {
     document.getElementById("load_others").innerHTML = res[10];
     document.getElementById("total_others").innerHTML = res[11];
   }
-  xhttp.open("GET", "http://34.89.29.21/dbwork/phpretrieve_plt_cityLoc.php?q="+str1+"&r="+str2+"&p="+str3);
+  xhttp.open("GET", "http://measurements.duckdns.org/dbwork/phpretrieve_plt_cityLoc.php?q="+str1+"&r="+str2+"&p="+str3);
   xhttp.send();
 }
 
@@ -596,7 +596,7 @@ function storeindB_withLocation() {
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all_cityLoc.php");
+  xhr.open("POST", "http://measurements.duckdns.org/dbwork/phpstore_all_cityLoc.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
@@ -631,7 +631,7 @@ function storeindB_withLocation_fine_gr(parr1, parr2) {
   //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://34.89.29.21/dbwork/phpstore_all_LatLong.php");
+  xhr.open("POST", "http://measurements.duckdns.org/dbwork/phpstore_all_LatLong.php");
   xhr.setRequestHeader("Content-type", "application/json")
   xhr.send(myJSON);
 }
