@@ -208,41 +208,67 @@ function getTiming_forAlexa_New(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function() {
-
-  // browser.storage.local.get('uniqueID').then(data => {
-  //   alert(data.uniqueID.id)
-  // });
+  let userID = ""
+  browser.storage.local.get('uniqueID').then(data => {
+    userID = data.uniqueID.id
+  });
   startCollect_topSites();
-  document.getElementById("btn_s").addEventListener("click", function() {
+  document.getElementById("option2").checked = true;
+  document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
+  document.querySelector('#option1').addEventListener('change', function() {
+    document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption1").innerHTML+". You can change your mind at anytime";
+    document.getElementById("btn_s").disabled = true;
+  });
+  document.querySelector('#option2').addEventListener('change', function() {
+    document.getElementById("btn_s").disabled = false;
+    document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
+  });
+  document.querySelector('#option3').addEventListener('change', function() {
+    document.getElementById("btn_s").disabled = false;
+    document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
+  });
 
-    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == false && document.getElementById("chk3").checked == false){
-      storeindB_withoutLocation();
-      showCustomer_LocIndependant_plt();
-      showCustomer_LocIndependant_alexa("s1","500");showCustomer_LocIndependant_alexa("s2","500");showCustomer_LocIndependant_alexa("s3","500");
-      showCustomer_LocIndependant_alexa("s4","500");showCustomer_LocIndependant_alexa("s5","500");showCustomer_LocIndependant_alexa("s1","10k");
-      showCustomer_LocIndependant_alexa("s2","10k");showCustomer_LocIndependant_alexa("s3","10k");showCustomer_LocIndependant_alexa("s1","1m");
-      showCustomer_LocIndependant_alexa("s2","1m");
+  document.getElementById("btn_s").addEventListener("click", function() {
+    if(document.getElementById("option2").checked){
+      storeindB_withLocation(userID);
+      document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
     }
-    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == false){
-      storeindB_withLocation();
-      showCustomer_Locdependant();
-      showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
-      showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
-      showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
-      showCustomer_Locdependant_alexa("s2","1m");
-    }
-    if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == true){
-      getLocation();
-      showCustomer_Locdependant();
-      showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
-      showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
-      showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
-      showCustomer_Locdependant_alexa("s2","1m");
-    }
-    if(document.getElementById("chk1").checked == false){
-      document.getElementById("error").innerHTML = "Please make sure that the first checkbox is checked";
+    if(document.getElementById("option3").checked){
+      getLocation(userID);
+      document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
     }
   });
+  // startCollect_topSites();
+  // document.getElementById("btn_s").addEventListener("click", function() {
+  //
+  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == false && document.getElementById("chk3").checked == false){
+  //     storeindB_withoutLocation();
+  //     showCustomer_LocIndependant_plt();
+  //     showCustomer_LocIndependant_alexa("s1","500");showCustomer_LocIndependant_alexa("s2","500");showCustomer_LocIndependant_alexa("s3","500");
+  //     showCustomer_LocIndependant_alexa("s4","500");showCustomer_LocIndependant_alexa("s5","500");showCustomer_LocIndependant_alexa("s1","10k");
+  //     showCustomer_LocIndependant_alexa("s2","10k");showCustomer_LocIndependant_alexa("s3","10k");showCustomer_LocIndependant_alexa("s1","1m");
+  //     showCustomer_LocIndependant_alexa("s2","1m");
+  //   }
+  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == false){
+  //     storeindB_withLocation();
+  //     showCustomer_Locdependant();
+  //     showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
+  //     showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
+  //     showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
+  //     showCustomer_Locdependant_alexa("s2","1m");
+  //   }
+  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == true){
+  //     getLocation();
+  //     showCustomer_Locdependant();
+  //     showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
+  //     showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
+  //     showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
+  //     showCustomer_Locdependant_alexa("s2","1m");
+  //   }
+  //   if(document.getElementById("chk1").checked == false){
+  //     document.getElementById("error").innerHTML = "Please make sure that the first checkbox is checked";
+  //   }
+  // });
 
   fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
   (response) => response.json()).then((jsonResponse) => {document.getElementById("divCheckboxg").innerHTML = jsonResponse.city
@@ -411,14 +437,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function getLocation() {
+function getLocation(userid) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       let lat = position.coords.latitude;
       let long = position.coords.longitude;
       document.getElementById("latt").innerHTML = lat.toFixed(6);
       document.getElementById("longg").innerHTML = long.toFixed(6);
-      storeindB_withLocation_fine_gr(lat.toFixed(6), long.toFixed(6));
+      storeindB_withLocation_fine_gr(lat.toFixed(6), long.toFixed(6), userid);
     });
   } else {
     document.getElementById("demoo").innerHTML = "Geolocation is not supported by this browser.";
@@ -570,12 +596,13 @@ function showCustomer_Locdependant() {
   xhttp.send();
 }
 
-function storeindB_withLocation() {
+function storeindB_withLocation(userid) {
 
   var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
   var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
 
   const record = {
+    uid          : userid,
     city        : document.getElementById("divCheckboxg").innerHTML,
     isp         : document.getElementById("divCheckboxh").innerHTML,
     timestamp   : document.getElementById("requestStart").innerHTML,
@@ -604,11 +631,12 @@ function storeindB_withLocation() {
   xhr.send(myJSON);
 }
 
-function storeindB_withLocation_fine_gr(parr1, parr2) {
+function storeindB_withLocation_fine_gr(parr1, parr2, userid) {
   var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
   var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
 
   const record = {
+    uid          : userid,
     city        : document.getElementById("divCheckboxg").innerHTML,
     isp         : document.getElementById("divCheckboxh").innerHTML,
     timestamp   : document.getElementById("requestStart").innerHTML,
