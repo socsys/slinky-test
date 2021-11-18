@@ -50,6 +50,9 @@ div#butShare {
     padding-left: 350px;
 }
 
+div#butDel {
+    padding-left: 296px;
+}
 #startStopBtn{
   display:inline-block;
   margin:0 auto;

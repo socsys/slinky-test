@@ -24,6 +24,7 @@ browser.runtime.onInstalled.addListener(function(info){
       const value = { id: uuidv4() };
       browser.storage.local.set({'uniqueID': value}).then(() => {
           console.log('Stored id: ' + value.id);
+          localStorage.setItem('uniqueID',value.id);
       });
     }
 });

@@ -22,23 +22,6 @@ function set(id, start, end, noacc) {
   //   'background-position-x:' + (x >= 300 ? 299 : x) + 'px;';
 }
 
-function collapsible_handle(){
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-      } else {
-        content.style.display = "block";
-      }
-    });
-  }
-}
-
 function fetchpages(arra){
   // document.addEventListener('DOMContentLoaded', function() {
     // var buttonelement = document.getElementById('alexab');
@@ -156,58 +139,82 @@ function fetchpages(arra){
   }
   setTimeout(getTiming_forAlexa_New, 10000);
 }
-
+function showdetails(){
+  alert("yes")
+  // document.getElementById("sr-s1-500").style.display = "block"
+}
 function getTiming_forAlexa_New(){
   var resources = performance.getEntriesByType("resource");
+  average_for_top500 = 0;
+  average_for_top10k = 0;
+  average_for_top1m = 0;
+  alert(resources.length)
   for(var i=0; i < resources.length; i++){
     if(resources[i].initiatorType == "fetch"){
 
       if((document.getElementById("sr-s1-500").innerHTML+"/").includes(resources[i].name)){
+        average_for_top500+=Math.round(resources[i].duration)
         document.getElementById("d-s1-500").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s2-500").innerHTML+"/").includes(resources[i].name)){
+        average_for_top500+=Math.round(resources[i].duration)
         document.getElementById("d-s2-500").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s3-500").innerHTML+"/").includes(resources[i].name)){
+        average_for_top500+=Math.round(resources[i].duration)
         document.getElementById("d-s3-500").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s4-500").innerHTML+"/").includes(resources[i].name)){
+        average_for_top500+=Math.round(resources[i].duration)
         document.getElementById("d-s4-500").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s5-500").innerHTML+"/").includes(resources[i].name)){
+        average_for_top500+=Math.round(resources[i].duration)
         document.getElementById("d-s5-500").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s1-10k").innerHTML+"/").includes(resources[i].name)){
+        average_for_top10k+=Math.round(resources[i].duration)
         document.getElementById("d-s1-10k").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s2-10k").innerHTML+"/").includes(resources[i].name)){
+        average_for_top10k+=Math.round(resources[i].duration)
         document.getElementById("d-s2-10k").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s3-10k").innerHTML+"/").includes(resources[i].name)){
+        average_for_top10k+=Math.round(resources[i].duration)
         document.getElementById("d-s3-10k").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s1-1m").innerHTML+"/").includes(resources[i].name)){
+        average_for_top1m+=Math.round(resources[i].duration)
         document.getElementById("d-s1-1m").innerHTML = Math.round(resources[i].duration)+" ms";
       }
 
       if((document.getElementById("sr-s2-1m").innerHTML+"/").includes(resources[i].name)){
+        average_for_top1m+=Math.round(resources[i].duration)
         document.getElementById("d-s2-1m").innerHTML = Math.round(resources[i].duration)+" ms";
       }
     }
   }
+  document.getElementById("rr-500").innerHTML = Math.round(average_for_top500/5)
+  document.getElementById("rr-10k").innerHTML = Math.round(average_for_top10k/3)
+  document.getElementById("rr-1m").innerHTML = Math.round(average_for_top1m/2)
+
+  document.getElementById("details").disabled=false;
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById("details").disabled=true;
   let userID = ""
   browser.storage.local.get('uniqueID').then(data => {
     userID = data.uniqueID.id
@@ -218,17 +225,25 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#option1').addEventListener('change', function() {
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption1").innerHTML+". You can change your mind at anytime";
     document.getElementById("btn_s").disabled = true;
+    document.getElementById("message2").innerHTML = "Please consider sharing your data to be able to see other participants' performance in your area"
+
   });
   document.querySelector('#option2').addEventListener('change', function() {
     document.getElementById("btn_s").disabled = false;
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
+    document.getElementById("message2").innerHTML = ""
   });
   document.querySelector('#option3').addEventListener('change', function() {
     document.getElementById("btn_s").disabled = false;
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
+    document.getElementById("message2").innerHTML = ""
   });
 
   document.getElementById("btn_s").addEventListener("click", function() {
+
+    let iframe = document.getElementById("myFrame");
+    let elmnt = iframe.contentWindow.document.getElementsByTagName("ulMeter")[0];
+    alert(iframe)
     if(document.getElementById("option2").checked){
       storeindB_withLocation(userID);
       document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
@@ -238,204 +253,28 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
     }
   });
-  // startCollect_topSites();
-  // document.getElementById("btn_s").addEventListener("click", function() {
-  //
-  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == false && document.getElementById("chk3").checked == false){
-  //     storeindB_withoutLocation();
-  //     showCustomer_LocIndependant_plt();
-  //     showCustomer_LocIndependant_alexa("s1","500");showCustomer_LocIndependant_alexa("s2","500");showCustomer_LocIndependant_alexa("s3","500");
-  //     showCustomer_LocIndependant_alexa("s4","500");showCustomer_LocIndependant_alexa("s5","500");showCustomer_LocIndependant_alexa("s1","10k");
-  //     showCustomer_LocIndependant_alexa("s2","10k");showCustomer_LocIndependant_alexa("s3","10k");showCustomer_LocIndependant_alexa("s1","1m");
-  //     showCustomer_LocIndependant_alexa("s2","1m");
-  //   }
-  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == false){
-  //     storeindB_withLocation();
-  //     showCustomer_Locdependant();
-  //     showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
-  //     showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
-  //     showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
-  //     showCustomer_Locdependant_alexa("s2","1m");
-  //   }
-  //   if(document.getElementById("chk1").checked == true && document.getElementById("chk2").checked == true && document.getElementById("chk3").checked == true){
-  //     getLocation();
-  //     showCustomer_Locdependant();
-  //     showCustomer_Locdependant_alexa("s1","500");showCustomer_Locdependant_alexa("s2","500");showCustomer_Locdependant_alexa("s3","500");
-  //     showCustomer_Locdependant_alexa("s4","500");showCustomer_Locdependant_alexa("s5","500");showCustomer_Locdependant_alexa("s1","10k");
-  //     showCustomer_Locdependant_alexa("s2","10k");showCustomer_Locdependant_alexa("s3","10k");showCustomer_Locdependant_alexa("s1","1m");
-  //     showCustomer_Locdependant_alexa("s2","1m");
-  //   }
-  //   if(document.getElementById("chk1").checked == false){
-  //     document.getElementById("error").innerHTML = "Please make sure that the first checkbox is checked";
-  //   }
-  // });
 
+  // to get the isp and city
   fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
   (response) => response.json()).then((jsonResponse) => {document.getElementById("divCheckboxg").innerHTML = jsonResponse.city
   document.getElementById("divCheckboxh").innerHTML = jsonResponse.org})
 
-  // Get user location information
-
-
-
-  ///////////////////////////////////
-
-  var checkboxelement = document.getElementById('chk1');
-  checkboxelement.addEventListener('change', function() {
-    if(document.getElementById("chk1").checked == true){
-      // storeindB_withoutLocation();
-      // showCustomer_LocIndependant();
-    }else{
-      document.getElementById("redirect_others").innerHTML = "";
-      document.getElementById("dns_others").innerHTML = "";
-      document.getElementById("connect_others").innerHTML = "";
-      document.getElementById("request_others").innerHTML = "";
-      document.getElementById("response_others").innerHTML = "";
-      document.getElementById("dom_others").innerHTML = "";
-      document.getElementById("domParse_others").innerHTML = "";
-      document.getElementById("domScripts_others").innerHTML = "";
-      document.getElementById("contentLoaded_others").innerHTML = "";
-      document.getElementById("domSubRes_others").innerHTML = "";
-      document.getElementById("load_others").innerHTML = "";
-      document.getElementById("total_others").innerHTML = "";
+  document.getElementById("details").addEventListener("click", function() {
+    if (document.getElementById("details").innerHTML == " More details "){
+      document.getElementById("r-s1-500").style.display = "block";
+      document.getElementById("r-s2-500").style.display = "block";
+      document.getElementById("r-s3-500").style.display = "block";
+      document.getElementById("r-s4-500").style.display = "block";
+      document.getElementById("r-s5-500").style.display = "block";
+      document.getElementById("r-s1-10k").style.display = "block";
+      document.getElementById("r-s2-10k").style.display = "block";
+      document.getElementById("r-s3-10k").style.display = "block";
+      document.getElementById("r-s1-1m").style.display = "block";
+      document.getElementById("r-s2-1m").style.display = "block";
+      // document.getElementById("details").innerHTML=" Hide details ";
     }
-  }, false);
-
-  var checkboxelement = document.getElementById('chk2');
-  checkboxelement.addEventListener('change', function() {
-    if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
-      // storeindB_withLocation();
-      // showCustomer_Locdependant();
-      // createItem();
-      // document.getElementById("shareLocationdiv").innerHTML = document.getElementById("divCheckboxg").innerHTML;
-    }else{
-      document.getElementById("redirect_others").innerHTML = "";
-      document.getElementById("dns_others").innerHTML = "";
-      document.getElementById("connect_others").innerHTML = "";
-      document.getElementById("request_others").innerHTML = "";
-      document.getElementById("response_others").innerHTML = "";
-      document.getElementById("dom_others").innerHTML = "";
-      document.getElementById("domParse_others").innerHTML = "";
-      document.getElementById("domScripts_others").innerHTML = "";
-      document.getElementById("contentLoaded_others").innerHTML = "";
-      document.getElementById("domSubRes_others").innerHTML = "";
-      document.getElementById("load_others").innerHTML = "";
-      document.getElementById("total_others").innerHTML = "";
-      // document.getElementById("shareLocationdiv").innerHTML = "Woud you like to share your current location with us";
-    }
-  }, false);
-
-  var checkboxelement = document.getElementById('chk3');
-  checkboxelement.addEventListener('change', function() {
-    if(document.getElementById("chk3").checked == true && document.getElementById("chk1").checked == true){
-
-      // getLocation();
-      // readValue();
-      // share_speedtest();
-      // getspeedtest_data();
-    }
-  }, false);
-
-  if(document.getElementById("chk2").checked == true && document.getElementById("chk1").checked == true){
-    alert("hello");
-  }
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-      } else {
-        content.style.display = "block";
-      }
-    });
-  }
-
-  // xmlhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     var myArr = JSON.parse(this.responseText);
-  //     var i;
-  //     var out = "";
-  //     for(i = 1; i < 6; i++) {
-  //       var x = generate_randnum();
-  //       sendTofetch.push("https://www."+ myArr[x]);
-  //       out += '>> https://www.'+ myArr[x] + '<br>';
-  //     }
-  //     document.getElementById("id01").innerHTML = out;
-  //   }
-  // };
-  // xmlhttp.open("GET", url, true);
-  // xmlhttp.send();
-  // fetchpages(sendTofetch);
-  // alert("elo");
-  // var xmlhttp = new XMLHttpRequest();
-  // // var url = "http://measurements.duckdns.org/top500.json";
-  // var url = "http://measurements.duckdns.org/tranco_list/phpTranco.php";
-  //
-  // xmlhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     alert(this.responseText);
-  //
-  //     if(tranco_list_version == this.responseText){
-  //       update_tranco_list = 0;
-  //     }else{
-  //       alert("yb");
-  //       update_tranco_list = 1;
-  //       tranco_list_version = this.responseText;
-  //       // getnew();
-  //     }
-  //   }
-  // };
-  // xmlhttp.open("GET", url, true);
-  // xmlhttp.send();
-
-  document.getElementById("a01").addEventListener("click", function() {
-      var xmlhttp_2 = new XMLHttpRequest();
-      var ary = [];
-      var url_2 = "https://measurements.duckdns.org/tranco_list/phpTranco_rand.php";
-      xmlhttp_2.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          // alert(this.responseText);
-          ary = this.responseText.split('<br>');
-          document.getElementById("id001").innerHTML = ">>"+ary[0]+"<br>"+">> "+ary[1]+"<br>"+">> "+ary[2]+"<br>"+">> "+ary[3]+"<br>"+">> "+ary[4];
-          document.getElementById("id002").innerHTML = ">> "+ary[5]+"<br>"+">> "+ary[6]+"<br>"+">> "+ary[7];
-          document.getElementById("id003").innerHTML = ">> "+ary[8]+"<br>"+">> "+ary[9];
-          alert(ary[0]);
-          // var myArr = JSON.parse(this.responseText);
-          // for(var i = 0; i < myArr.length; i++) {
-            //   top1m.push("https://www."+ myArr[i]);
-            // }
-            // top1m = myArr;
-            // saveTrancoList();
-            // alert(ary[11]);
-            sendTofetch = ary;
-            alert(sendTofetch);
-            fetchpages(sendTofetch);
-          }
-        };
-        xmlhttp_2.open("GET", url_2, true);
-        xmlhttp_2.send();
-
-
-    //   //fetchpages(sendTofetch);
   });
 }, false);
-//
-// function getspeedtest_data(){
-//   var resources = performance.getEntriesByType("resource");
-//   for(var i=0; i < resources.length; i++){
-//     alert(i);
-//     if(resources[i].initiatorType == "img" && resources[i].name.include("https://librespeed.org/results/")){
-//       alert("ha");
-//     }
-//   }
-// }
-
-
-
 
 function getLocation(userid) {
   if (navigator.geolocation) {

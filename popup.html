@@ -59,6 +59,11 @@
 <div id="butShare">
   <button type="button" id="btn_s"> Share </button>
 </div>
+
+<div id="butDel">
+  <button type="button" id="btn_del"> Delete my data </button>
+</div>
+
 <br>
 <div id="message" style="font-weight: bold;"></div>
 <div id="demoo" style="display: none;"> HELLOOOOO </div>
@@ -71,8 +76,9 @@
 
 <button type="button" class="collapsible" id="a00">Performance in loading current website</button>
 
-<div class="content">
+<div class="content" style="display: block;">
 <h3>Load timings (ms)</h3>
+<h4 id="message2"></h4>
 <div id="container">
     <div id="header">
         <span>Event</span>
@@ -151,7 +157,7 @@
 
 <button type="button" class="collapsible" id="sa">Performance in loading popular wesbites</button>
 
-<div class="content">
+<div class="content" style="display: block;">
 <h3>Load timings (ms)</h3>
 <div id="container">
     <div id="header">
@@ -161,31 +167,31 @@
 
     </div>
     <div class="row" id="r-top500" style="font-weight: bold">
-        <span>Top 500 websites</span>
+        <span id="500-details">Top 500 websites</span>
         <span id="rr-500"></span>
-        <span id="rr_others-500"></span>
+        <span id="rr_others-500" style="color: red;"></span>
     </div>
-    <div class="row" id="r-s1-500">
+    <div class="row" id="r-s1-500" style="display: none;">
         <span class="sub" id="sr-s1-500">Parse</span>
         <span id="d-s1-500"></span>
         <span id="d-s1_others-500"></span>
     </div>
-    <div class="row" id="r-s2-500">
+    <div class="row" id="r-s2-500" style="display: none;">
         <span class="sub" id="sr-s2-500">Parse</span>
         <span id="d-s2-500"></span>
         <span id="d-s2_others-500"></span>
     </div>
-    <div class="row" id="r-s3-500">
+    <div class="row" id="r-s3-500" style="display: none;">
         <span class="sub" id="sr-s3-500">Parse</span>
         <span id="d-s3-500"></span>
         <span id="d-s3_others-500"></span>
     </div>
-    <div class="row" id="r-s4-500">
+    <div class="row" id="r-s4-500" style="display: none;">
         <span class="sub" id="sr-s4-500">Parse</span>
         <span id="d-s4-500"></span>
         <span id="d-s4_others-500"></span>
     </div>
-    <div class="row" id="r-s5-500">
+    <div class="row" id="r-s5-500" style="display: none;">
         <span class="sub" id="sr-s5-500">Parse</span>
         <span id="d-s5-500"></span>
         <span id="d-s5_others-500"></span>
@@ -197,17 +203,17 @@
         <span id="rr-10k"></span>
         <span id="rr_others-10k"></span>
     </div>
-    <div class="row" id="r-s1-10k">
+    <div class="row" id="r-s1-10k" style="display: none;">
         <span class="sub" id="sr-s1-10k">Parse</span>
         <span id="d-s1-10k"></span>
         <span id="d-s1_others-10k"></span>
     </div>
-    <div class="row" id="r-s2-10k">
+    <div class="row" id="r-s2-10k" style="display: none;">
         <span class="sub" id="sr-s2-10k">Parse</span>
         <span id="d-s2-10k"></span>
         <span id="d-s2_others-10k"></span>
     </div>
-    <div class="row" id="r-s3-10k">
+    <div class="row" id="r-s3-10k" style="display: none;">
         <span class="sub" id="sr-s3-10k">Parse</span>
         <span id="d-s3-10k"></span>
         <span id="d-s3_others-10k"></span>
@@ -218,56 +224,19 @@
         <span id="rr-1m"></span>
         <span id="rr_others-1m"></span>
     </div>
-    <div class="row" id="r-s1-1m">
+    <div class="row" id="r-s1-1m" style="display: none;">
         <span class="sub" id="sr-s1-1m">Parse</span>
         <span id="d-s1-1m"></span>
         <span id="d-s1_others-1m"></span>
     </div>
-    <div class="row" id="r-s2-1m">
+    <div class="row" id="r-s2-1m" style="display: none;">
         <span class="sub" id="sr-s2-1m">Parse</span>
         <span id="d-s2-1m"></span>
         <span id="d-s2_others-1m"></span>
     </div>
   </div>
+  <button type="button" id="details"> More details </button>
 </div>
-
-
-<!-- <div class="content">
-  <div class="content" style="display: flex; width: 100%; height: 315px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
-      <div style="width: 80%; background: white; style=text-align: right;" id="id01">
-          <button type="button" class="collapsible" id="aa01">Random top 500 websites</button>
-          <div class="content">
-            <div class="content" style="display: flex; width: 100%; height: 115px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
-                <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id001">
-                </div>
-                <div style="display: flex; width: 20%; height: 115px; background: #f1f1f1; style=text-align: right;" id="id0011">
-                </div>
-            </div>
-          </div>
-
-          <button type="button" class="collapsible" id="aa02">Random top 10k websites</button>
-            <div class="content">
-              <div class="content" style="display: flex; width: 100%; height: 75px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
-                  <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id002">
-                  </div>
-                  <div style="display: flex; width: 20%; height: 75px; background: #f1f1f1; style=text-align: right;" id="id0022">
-                  </div>
-              </div>
-            </div>
-
-          <button type="button" class="collapsible" id="aa03">Random top 1M websites</button>
-              <div class="content">
-                <div class="content" style="display: flex; width: 100%; height: 60px; border: none; text-align: left; outline: none; font-size: 14px; line-height: 1.6;">
-                    <div style="width: 100%; background: #f1f1f1; style=text-align: right;" id="id003">
-                    </div>
-                    <div style="display: flex; width: 20%; height: 60px; background: #f1f1f1; style=text-align: right;" id="id0033">
-                    </div>
-                </div>
-              </div>
-      </div>
-      <!-- <div style="flex-grow: 1; background: white; style=text-align: right;" id="id02">
-
-      </div> -->
 
 <!-- <button type="button" class="collapsible" id="a02">Speed Test Measurements</button>
 <div class="content"> -->
@@ -279,7 +248,7 @@
 <!-- <object data="https://librespeed.org/" width="420" height="870"></object> -->
 <!-- </div> -->
 <!-- <iframe id="myFrame" src="http://34.89.29.21/index.html" height="550" width="420" style="border:none;" scrolling="no"></iframe> -->
-<iframe id="myFrame" src="https://measurements.duckdns.org/index.html" height="550" width="420" style="border:none;" scrolling="no"></iframe>
+<iframe id="myFrame" src="https://measurements.duckdns.org/index3.html" height="550" width="420" style="border:none;" scrolling="no"></iframe>
 <!-- </div> -->
 
 
