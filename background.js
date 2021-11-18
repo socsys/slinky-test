@@ -13,6 +13,21 @@ browser.runtime.onMessage.addListener((request, sender) => {
 
 });
 
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+browser.runtime.onInstalled.addListener(function(info){
+    if (info.reason == "install"){
+      const value = { id: uuidv4() };
+      browser.storage.local.set({'uniqueID': value}).then(() => {
+          console.log('Stored id: ' + value.id);
+      });
+    }
+});
+
 // cache eviction
 browser.tabs.onRemoved.addListener(tabId => {
   browser.storage.local.get('cache').then(data => {

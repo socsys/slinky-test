@@ -209,6 +209,9 @@ function getTiming_forAlexa_New(){
 
 document.addEventListener('DOMContentLoaded', function() {
 
+  // browser.storage.local.get('uniqueID').then(data => {
+  //   alert(data.uniqueID.id)
+  // });
   startCollect_topSites();
   document.getElementById("btn_s").addEventListener("click", function() {
 
