@@ -7,100 +7,10 @@ var open_dropdown = 0;
 
 var ary = [];
 
-
-var RandArray = [-1];
-var testoarray =["hello", "there"];
-
 function set(id, start, end, noacc) {
   var length = Math.round(end - start);
   var x = Math.round(start / total * 300);
-  // document.getElementById(id + 'When').innerHTML = Math.round(start);
   document.getElementById(id).innerHTML = length;
-  // document.getElementById(id + 'Total').innerHTML = noacc ? '-' : Math.round(end);
-  // document.getElementById('r-' + id).style.cssText =
-  //   'background-size:' + Math.round(length / total * 300) + 'px 100%;' +
-  //   'background-position-x:' + (x >= 300 ? 299 : x) + 'px;';
-}
-
-function fetchpages(arra){
-  // document.addEventListener('DOMContentLoaded', function() {
-    // var buttonelement = document.getElementById('alexab');
-    var buttonelement = document.getElementById('aa01');
-    buttonelement.addEventListener('click', function() {
-      var content2 = this.nextElementSibling;
-      if(content2.style.display == "block"){
-        for (i = 0; i < 5; i++){
-          // alert("Hello!");
-          var getou = arra[i];
-          fetch(getou)
-          .then(response => response.text())
-
-          // .then(data => document.getElementById("demo3").innerHTML = data);
-          // var x = document.createElement("div");
-          // if(document.readyState === 'complete'){
-            // startCollect2();
-            // alert("Hello!2");
-            // }
-          }
-          setTimeout(getTiming_forAlexa, 5000);
-      }
-      }, false);
-
-      var buttonelement = document.getElementById('aa02');
-      buttonelement.addEventListener('click', function() {
-        var content3 = this.nextElementSibling;
-        if(content3.style.display == "block"){
-          for (i = 5; i < 8; i++){
-            // alert("Hello!");
-            var getou = arra[i];
-            fetch(getou)
-            .then(response => response.text())
-
-            // .then(data => document.getElementById("demo3").innerHTML = data);
-            // var x = document.createElement("div");
-            // if(document.readyState === 'complete'){
-              // startCollect2();
-              // alert("Hello!2");
-              // }
-            }
-            setTimeout(getTiming_forAlexa_2, 2000);
-        }
-        }, false);
-
-        var buttonelement = document.getElementById('aa03');
-        buttonelement.addEventListener('click', function() {
-          var content4 = this.nextElementSibling;
-          if(content4.style.display == "block"){
-            for (i = 8; i < 10; i++){
-              // alert("Hello!");
-              var getou = arra[i];
-              fetch(getou)
-              .then(response => response.text())
-
-              // .then(data => document.getElementById("demo3").innerHTML = data);
-              // var x = document.createElement("div");
-              // if(document.readyState === 'complete'){
-                // startCollect2();
-                // alert("Hello!2");
-                // }
-              }
-              setTimeout(getTiming_forAlexa_3, 2000);
-          }
-          }, false);
-
-    // }, false);
-}
-
-function generate_randnum(){
-  var x = Math.floor((Math.random() * 10) + 1);
-  for(var i = 0 ; i < RandArray.length; i++){
-    if(RandArray[i] != x){
-      RandArray.push(x);
-      return x;
-    }else{
-      generate_randnum();
-    }
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -139,10 +49,7 @@ function fetchpages(arra){
   }
   setTimeout(getTiming_forAlexa_New, 10000);
 }
-function showdetails(){
-  alert("yes")
-  // document.getElementById("sr-s1-500").style.display = "block"
-}
+
 function getTiming_forAlexa_New(){
   var resources = performance.getEntriesByType("resource");
   average_for_top500 = 0;
@@ -219,12 +126,21 @@ document.addEventListener('DOMContentLoaded', function() {
   browser.storage.local.get('uniqueID').then(data => {
     userID = data.uniqueID.id
   });
+  const segments = ["s1", "s2", "s3", "s4", "s5", "s1", "s2", "s3", "s1", "s1"];
+  const topsites = ["500", "500", "500", "500", "500", "10k", "10k", "10k", "1m", "1m"];
+
   startCollect_topSites();
   document.getElementById("option2").checked = true;
   document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
   document.querySelector('#option1').addEventListener('change', function() {
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption1").innerHTML+". You can change your mind at anytime";
     document.getElementById("btn_s").disabled = true;
+    document.getElementById("redirect_others").innerHTML = "";document.getElementById("dns_others").innerHTML = "";
+    document.getElementById("connect_others").innerHTML = "";document.getElementById("request_others").innerHTML = "";
+    document.getElementById("response_others").innerHTML = "";document.getElementById("dom_others").innerHTML = "";
+    document.getElementById("domParse_others").innerHTML = "";document.getElementById("domScripts_others").innerHTML = "";
+    document.getElementById("contentLoaded_others").innerHTML = "";document.getElementById("domSubRes_others").innerHTML = "";
+    document.getElementById("load_others").innerHTML = "";document.getElementById("total_others").innerHTML = "";
     document.getElementById("message2").innerHTML = "Please consider sharing your data to be able to see other participants' performance in your area"
 
   });
@@ -240,20 +156,31 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.getElementById("btn_s").addEventListener("click", function() {
-
-    let iframe = document.getElementById("myFrame");
-    let elmnt = iframe.contentWindow.document.getElementsByTagName("ulMeter")[0];
-    alert(iframe)
     if(document.getElementById("option2").checked){
       storeindB_withLocation(userID);
       document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
+      document.getElementById("btn_s").disabled = true;
+      showCustomer_Locdependant();
+      for (let i = 0; i < segments.length; i++){
+        showCustomer_Locdependant_alexa(segments[i], topsites[i]);
+      }
     }
     if(document.getElementById("option3").checked){
       getLocation(userID);
       document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
+      document.getElementById("btn_s").disabled = true;
+      showCustomer_Locdependant();
+      for (let i = 0; i < segments.length; i++){
+        showCustomer_Locdependant_alexa(segments[i], topsites[i]);
+      }
     }
   });
 
+  document.getElementById("btn_del").addEventListener("click", function() {
+    deleteUserData(userID);
+    document.getElementById("btn_del").disabled = true;
+    document.getElementById("message").innerHTML = "Thank you! Your data has been deleted from our database"+". You can change your mind and share your data again at anytime";
+  });
   // to get the isp and city
   fetch("https://ipinfo.io/json?token=0a0c3bdf30704b").then(
   (response) => response.json()).then((jsonResponse) => {document.getElementById("divCheckboxg").innerHTML = jsonResponse.city
@@ -271,10 +198,19 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById("r-s3-10k").style.display = "block";
       document.getElementById("r-s1-1m").style.display = "block";
       document.getElementById("r-s2-1m").style.display = "block";
-      // document.getElementById("details").innerHTML=" Hide details ";
     }
   });
 }, false);
+
+function deleteUserData(userid) {
+
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    var result = this.responseText;
+  }
+  xhttp.open("GET", "https://measurements.duckdns.org/dbwork/phpdelete_data.php?u="+userid);
+  xhttp.send();
+}
 
 function getLocation(userid) {
   if (navigator.geolocation) {
@@ -298,7 +234,6 @@ function showCustomer_LocIndependant_plt() {
   }
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
-    // document.getElementById("demo").innerHTML = this.responseText;
     var result = this.responseText;
     var res = result.split(",");
 
@@ -385,7 +320,6 @@ function storeindB_withoutLocation() {
     reqtime     : timings
   };
   const myJSON = JSON.stringify(record);
-  //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://measurements.duckdns.org/dbwork/phpstore_all.php");
@@ -399,13 +333,13 @@ function showCustomer_Locdependant() {
     document.getElementById("txtHint").innerHTML = "";
     return;
   }
-
+  //city
   str2 = document.getElementById("divCheckboxg").innerHTML;
   if (str2 == "") {
     document.getElementById("txtHint").innerHTML = "";
     return;
   }
-
+  //provider/ISP
   str3 = document.getElementById("divCheckboxh").innerHTML;
   if (str3 == "") {
     document.getElementById("txtHint").innerHTML = "";
@@ -414,7 +348,6 @@ function showCustomer_Locdependant() {
 
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
-    // document.getElementById("demo").innerHTML = this.responseText;
     var result = this.responseText;
     var res = result.split(",");
 
@@ -462,7 +395,6 @@ function storeindB_withLocation(userid) {
     reqtime     : timings
   };
   const myJSON = JSON.stringify(record);
-  //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://measurements.duckdns.org/dbwork/phpstore_all_cityLoc.php");
@@ -498,7 +430,6 @@ function storeindB_withLocation_fine_gr(parr1, parr2, userid) {
     longitude   : parr2
   };
   const myJSON = JSON.stringify(record);
-  //document.getElementById("demo").innerHTML = myJSON;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://measurements.duckdns.org/dbwork/phpstore_all_LatLong.php");
