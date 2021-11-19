@@ -15,8 +15,15 @@ function set(id, start, end, noacc) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
+function get_page_size(){
+  var page_size = 0
+  var resources = performance.getEntriesByType("resource");
+  for(var i=0; i < resources.length; i++){
+    page_size += resources[i].decodedBodySize
+  }
+  return page_size
+}
 function startCollect_topSites() {
-
   var xmlhttp = new XMLHttpRequest();
   var url = "https://measurements.duckdns.org/tranco_list/phpTranco_rand.php";
   xmlhttp.onreadystatechange = function() {
@@ -55,7 +62,6 @@ function getTiming_forAlexa_New(){
   average_for_top500 = 0;
   average_for_top10k = 0;
   average_for_top1m = 0;
-  alert(resources.length)
   for(var i=0; i < resources.length; i++){
     if(resources[i].initiatorType == "fetch"){
 
@@ -126,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
   browser.storage.local.get('uniqueID').then(data => {
     userID = data.uniqueID.id
   });
+
   const segments = ["s1", "s2", "s3", "s4", "s5", "s1", "s2", "s3", "s1", "s1"];
   const topsites = ["500", "500", "500", "500", "500", "10k", "10k", "10k", "1m", "1m"];
 
@@ -458,5 +465,7 @@ browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
     document.getElementById("total").innerHTML = Math.round(t.duration);
     document.getElementById("requestStart").innerHTML = new Date(t.start).toString();
     document.getElementById("tabUrl").innerHTML = tab.url;
+    document.getElementById("plt").innerHTML = "Current page loaded in "+ document.getElementById("total").innerHTML +" ms"
   });
+
 });

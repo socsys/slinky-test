@@ -9,6 +9,12 @@ div#check\ sharing {
     font-weight: bold;
 }
 
+div#plt {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
 div#consent {
     font-size: 15px;
     font-weight: bold;
