@@ -5,6 +5,8 @@ var tranco_list_version = "";
 var update_tranco_list = 2;
 var open_dropdown = 0;
 
+// var sharing_options = -1;
+let userID = ""
 var ary = [];
 
 function set(id, start, end, noacc) {
@@ -23,11 +25,11 @@ function get_page_size(){
   }
   return page_size
 }
-function startCollect_topSites() {
+function startCollect_topSites(sharing) {
   var xmlhttp = new XMLHttpRequest();
   var url = "https://measurements.duckdns.org/tranco_list/phpTranco_rand.php";
   xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if ((this.readyState == 4 && this.status == 200) || this.status == 301 || this.status == 302) {
       ary = this.responseText.split('<br>');
       document.getElementById("sr-s1-500").innerHTML = ary[0];
       document.getElementById("sr-s2-500").innerHTML = ary[1];
@@ -41,78 +43,91 @@ function startCollect_topSites() {
 
       document.getElementById("sr-s1-1m").innerHTML = ary[8];
       document.getElementById("sr-s2-1m").innerHTML = ary[9];
-      fetchpages(ary);
+      fetchpages(ary, sharing);
     }
   };
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }
 
-function fetchpages(arra){
+function fetchpages(arra, sharing){
   for (i = 0; i < 10; i++){
     var getou = arra[i];
     fetch(getou)
     .then(response => response.text())
   }
-  setTimeout(getTiming_forAlexa_New, 10000);
+  setTimeout(function(){getTiming_forAlexa_New(sharing);}, 10000)
+  // setTimeout(getTiming_forAlexa_New, 10000);
 }
 
-function getTiming_forAlexa_New(){
+function getTiming_forAlexa_New(sharing){
   var resources = performance.getEntriesByType("resource");
   average_for_top500 = 0;
   average_for_top10k = 0;
   average_for_top1m = 0;
+  ds1_500 = 0; ds2_500 = 0; ds3_500 = 0; ds4_500 = 0; ds5_500 = 0;
+  ds1_10k = 0; ds2_10k = 0; ds3_10k = 0; ds1_1m = 0; ds2_1m = 0;
   for(var i=0; i < resources.length; i++){
     if(resources[i].initiatorType == "fetch"){
 
       if((document.getElementById("sr-s1-500").innerHTML+"/").includes(resources[i].name)){
         average_for_top500+=Math.round(resources[i].duration)
-        document.getElementById("d-s1-500").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds1_500+=Math.round(resources[i].duration)
+        document.getElementById("d-s1-500").innerHTML = ds1_500+" ms";
       }
 
       if((document.getElementById("sr-s2-500").innerHTML+"/").includes(resources[i].name)){
         average_for_top500+=Math.round(resources[i].duration)
-        document.getElementById("d-s2-500").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds2_500+=Math.round(resources[i].duration)
+        document.getElementById("d-s2-500").innerHTML = ds2_500+" ms";
       }
 
       if((document.getElementById("sr-s3-500").innerHTML+"/").includes(resources[i].name)){
         average_for_top500+=Math.round(resources[i].duration)
-        document.getElementById("d-s3-500").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds3_500+=Math.round(resources[i].duration)
+        document.getElementById("d-s3-500").innerHTML = ds3_500+" ms";
       }
 
       if((document.getElementById("sr-s4-500").innerHTML+"/").includes(resources[i].name)){
         average_for_top500+=Math.round(resources[i].duration)
-        document.getElementById("d-s4-500").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds4_500+=Math.round(resources[i].duration)
+        document.getElementById("d-s4-500").innerHTML = ds4_500+" ms";
       }
 
       if((document.getElementById("sr-s5-500").innerHTML+"/").includes(resources[i].name)){
         average_for_top500+=Math.round(resources[i].duration)
-        document.getElementById("d-s5-500").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds5_500+=Math.round(resources[i].duration)
+        document.getElementById("d-s5-500").innerHTML = ds5_500+" ms";
       }
 
       if((document.getElementById("sr-s1-10k").innerHTML+"/").includes(resources[i].name)){
         average_for_top10k+=Math.round(resources[i].duration)
-        document.getElementById("d-s1-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds1_10k+= Math.round(resources[i].duration)
+        document.getElementById("d-s1-10k").innerHTML = ds1_10k+" ms";
       }
 
       if((document.getElementById("sr-s2-10k").innerHTML+"/").includes(resources[i].name)){
         average_for_top10k+=Math.round(resources[i].duration)
-        document.getElementById("d-s2-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds2_10k+= Math.round(resources[i].duration)
+        document.getElementById("d-s2-10k").innerHTML = ds2_10k+" ms";
       }
 
       if((document.getElementById("sr-s3-10k").innerHTML+"/").includes(resources[i].name)){
         average_for_top10k+=Math.round(resources[i].duration)
-        document.getElementById("d-s3-10k").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds3_10k+= Math.round(resources[i].duration)
+        document.getElementById("d-s3-10k").innerHTML = ds3_10k+" ms";
       }
 
       if((document.getElementById("sr-s1-1m").innerHTML+"/").includes(resources[i].name)){
         average_for_top1m+=Math.round(resources[i].duration)
-        document.getElementById("d-s1-1m").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds1_1m+= Math.round(resources[i].duration)
+        document.getElementById("d-s1-1m").innerHTML = ds1_1m+" ms";
       }
 
       if((document.getElementById("sr-s2-1m").innerHTML+"/").includes(resources[i].name)){
         average_for_top1m+=Math.round(resources[i].duration)
-        document.getElementById("d-s2-1m").innerHTML = Math.round(resources[i].duration)+" ms";
+        ds2_1m+= Math.round(resources[i].duration)
+        document.getElementById("d-s2-1m").innerHTML = ds2_1m+" ms";
       }
     }
   }
@@ -121,6 +136,23 @@ function getTiming_forAlexa_New(){
   document.getElementById("rr-1m").innerHTML = Math.round(average_for_top1m/2)
 
   document.getElementById("details").disabled=false;
+
+  const segments = ["s1", "s2", "s3", "s4", "s5", "s1", "s2", "s3", "s1", "s1"];
+  const topsites = ["500", "500", "500", "500", "500", "10k", "10k", "10k", "1m", "1m"];
+  if(sharing == 1){
+    storeindB_withLocation_alexa(userID);
+    showCustomer_Locdependant();
+    for (let i = 0; i < segments.length; i++){
+      showCustomer_Locdependant_alexa(segments[i], topsites[i]);
+    }
+  }
+  if (sharing == 2){
+    getLocation(userID);
+    showCustomer_Locdependant();
+    for (let i = 0; i < segments.length; i++){
+      showCustomer_Locdependant_alexa(segments[i], topsites[i]);
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,20 +160,40 @@ function getTiming_forAlexa_New(){
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById("details").disabled=true;
-  let userID = ""
   browser.storage.local.get('uniqueID').then(data => {
     userID = data.uniqueID.id
   });
 
-  const segments = ["s1", "s2", "s3", "s4", "s5", "s1", "s2", "s3", "s1", "s1"];
-  const topsites = ["500", "500", "500", "500", "500", "10k", "10k", "10k", "1m", "1m"];
+  browser.storage.local.get('sharingOption').then(data => {
+    console.log('sharing option : ' + data.sharingOption.share);
+    sharing = data.sharingOption.share;
+    if (sharing == 0){
+      document.getElementById("option1").checked = true;
+      document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption1").innerHTML+". You can change your mind at anytime";
+      document.getElementById("message2").innerHTML = "Please consider sharing your data to be able to see other participants' performance in your area"
+    }
+    if (sharing == 1){
+      document.getElementById("option2").checked = true;
+      document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
+      document.getElementById("message2").innerHTML = ""
+      startCollect_topSites(sharing);
 
-  startCollect_topSites();
-  document.getElementById("option2").checked = true;
+    }
+    if (sharing == 2){
+      document.getElementById("option3").checked = true;
+      document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
+      document.getElementById("message2").innerHTML = ""
+      startCollect_topSites(sharing);
+    }
+  });
+
   document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
   document.querySelector('#option1').addEventListener('change', function() {
+    const sharing_option = { share: 0 };
+    browser.storage.local.set({'sharingOption': sharing_option}).then(() => {
+        localStorage.setItem('sharingOption', sharing_option.share);
+    });
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption1").innerHTML+". You can change your mind at anytime";
-    document.getElementById("btn_s").disabled = true;
     document.getElementById("redirect_others").innerHTML = "";document.getElementById("dns_others").innerHTML = "";
     document.getElementById("connect_others").innerHTML = "";document.getElementById("request_others").innerHTML = "";
     document.getElementById("response_others").innerHTML = "";document.getElementById("dom_others").innerHTML = "";
@@ -149,38 +201,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("contentLoaded_others").innerHTML = "";document.getElementById("domSubRes_others").innerHTML = "";
     document.getElementById("load_others").innerHTML = "";document.getElementById("total_others").innerHTML = "";
     document.getElementById("message2").innerHTML = "Please consider sharing your data to be able to see other participants' performance in your area"
-
   });
   document.querySelector('#option2').addEventListener('change', function() {
-    document.getElementById("btn_s").disabled = false;
+    const sharing_option = { share: 1 };
+    browser.storage.local.set({'sharingOption': sharing_option}).then(() => {
+        localStorage.setItem('sharingOption', sharing_option.share);
+    });
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
     document.getElementById("message2").innerHTML = ""
+    startCollect_topSites(sharing);
   });
   document.querySelector('#option3').addEventListener('change', function() {
-    document.getElementById("btn_s").disabled = false;
+    const sharing_option = { share: 2 };
+    browser.storage.local.set({'sharingOption': sharing_option}).then(() => {
+        localStorage.setItem('sharingOption', sharing_option.share);
+    });
     document.getElementById("message").innerHTML = "Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
     document.getElementById("message2").innerHTML = ""
-  });
-
-  document.getElementById("btn_s").addEventListener("click", function() {
-    if(document.getElementById("option2").checked){
-      storeindB_withLocation(userID);
-      document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption2").innerHTML+". You can change your mind at anytime";
-      document.getElementById("btn_s").disabled = true;
-      showCustomer_Locdependant();
-      for (let i = 0; i < segments.length; i++){
-        showCustomer_Locdependant_alexa(segments[i], topsites[i]);
-      }
-    }
-    if(document.getElementById("option3").checked){
-      getLocation(userID);
-      document.getElementById("message").innerHTML = "Thank you for sharing the data. Your current settings is: "+document.getElementById("foption3").innerHTML+". You can change your mind at anytime";
-      document.getElementById("btn_s").disabled = true;
-      showCustomer_Locdependant();
-      for (let i = 0; i < segments.length; i++){
-        showCustomer_Locdependant_alexa(segments[i], topsites[i]);
-      }
-    }
+    startCollect_topSites(sharing);
   });
 
   document.getElementById("btn_del").addEventListener("click", function() {
@@ -226,7 +264,8 @@ function getLocation(userid) {
       let long = position.coords.longitude;
       document.getElementById("latt").innerHTML = lat.toFixed(6);
       document.getElementById("longg").innerHTML = long.toFixed(6);
-      storeindB_withLocation_fine_gr(lat.toFixed(6), long.toFixed(6), userid);
+      // storeindB_withLocation_fine_gr(lat.toFixed(6), long.toFixed(6), userid);
+      storeindB_withLocation_fine_gr_alexa(lat.toFixed(6), long.toFixed(6), userid);
     });
   } else {
     document.getElementById("demoo").innerHTML = "Geolocation is not supported by this browser.";
@@ -409,6 +448,27 @@ function storeindB_withLocation(userid) {
   xhr.send(myJSON);
 }
 
+function storeindB_withLocation_alexa(userid) {
+
+  var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
+  var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
+
+  const record = {
+    uid          : userid,
+    city        : document.getElementById("divCheckboxg").innerHTML,
+    isp         : document.getElementById("divCheckboxh").innerHTML,
+    timestamp   : document.getElementById("requestStart").innerHTML,
+    website     : websites,
+    reqtime     : timings
+  };
+  const myJSON = JSON.stringify(record);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://measurements.duckdns.org/dbwork/phpstore_all_cityLoc_alexa.php");
+  xhr.setRequestHeader("Content-type", "application/json")
+  xhr.send(myJSON);
+}
+
 function storeindB_withLocation_fine_gr(parr1, parr2, userid) {
   var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
   var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
@@ -444,6 +504,28 @@ function storeindB_withLocation_fine_gr(parr1, parr2, userid) {
   xhr.send(myJSON);
 }
 
+function storeindB_withLocation_fine_gr_alexa(parr1, parr2, userid) {
+  var websites = document.getElementById("sr-s1-500").innerHTML.trimStart("\n")+","+document.getElementById("sr-s2-500").innerHTML+","+document.getElementById("sr-s3-500").innerHTML+","+document.getElementById("sr-s4-500").innerHTML+","+document.getElementById("sr-s5-500").innerHTML+","+document.getElementById("sr-s1-10k").innerHTML+","+document.getElementById("sr-s2-10k").innerHTML+","+document.getElementById("sr-s3-10k").innerHTML+","+document.getElementById("sr-s1-1m").innerHTML+","+document.getElementById("sr-s2-1m").innerHTML;
+  var timings = document.getElementById("d-s1-500").innerHTML+","+document.getElementById("d-s2-500").innerHTML+","+document.getElementById("d-s3-500").innerHTML+","+document.getElementById("d-s4-500").innerHTML+","+document.getElementById("d-s5-500").innerHTML+","+document.getElementById("d-s1-10k").innerHTML+","+document.getElementById("d-s2-10k").innerHTML+","+document.getElementById("d-s3-10k").innerHTML+","+document.getElementById("d-s1-1m").innerHTML+","+document.getElementById("d-s2-1m").innerHTML;
+
+  const record = {
+    uid          : userid,
+    city        : document.getElementById("divCheckboxg").innerHTML,
+    isp         : document.getElementById("divCheckboxh").innerHTML,
+    timestamp   : document.getElementById("requestStart").innerHTML,
+    website     : websites,
+    reqtime     : timings,
+    latitude    : parr1,
+    longitude   : parr2
+  };
+  const myJSON = JSON.stringify(record);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://measurements.duckdns.org/dbwork/phpstore_all_LatLong_alexa.php");
+  xhr.setRequestHeader("Content-type", "application/json")
+  xhr.send(myJSON);
+}
+
 browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
   var tab = tabs[0];
   browser.storage.local.get('cache').then(data => {
@@ -467,5 +549,4 @@ browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
     document.getElementById("tabUrl").innerHTML = tab.url;
     document.getElementById("plt").innerHTML = "Current page loaded in "+ document.getElementById("total").innerHTML +" ms"
   });
-
 });
